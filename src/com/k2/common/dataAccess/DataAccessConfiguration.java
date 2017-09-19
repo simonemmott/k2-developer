@@ -42,6 +42,8 @@ import com.k2.common.spring.ApplicationError;
 @PropertySource("file:${K2_HOME}/conf/k2.properties")
 public class DataAccessConfiguration {
 	
+	//This is a comment
+	
 	@Autowired(required=true)
 	private Environment env;
 	
