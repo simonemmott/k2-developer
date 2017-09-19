@@ -1,0 +1,9 @@
+<!DOCTYPE aspectj PUBLIC "-//AspectJ//DTD 1.5.0//EN" "http://www.eclipse.org/aspectj/dtd/aspectj.dtd">
+<aspectj>
+  <weaver>
+    <include within="com.k2.dev.model.bo.*"/>
+    <include within="com.k2.dev.foo.*"/>
+    <include within="com.k2.dev.dao.hibernate.*"/>
+    <include within="com.k2.dev.service.impl.*"/>
+  </weaver>
+</aspectj>  
