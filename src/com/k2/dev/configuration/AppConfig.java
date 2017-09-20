@@ -24,6 +24,8 @@ import com.google.gson.GsonBuilder;
 @PropertySource("file:${K2_HOME}/conf/k2.properties")
 public class AppConfig {
 	
+	// This is an comment
+	
 	@SuppressWarnings("unused")
 	@Autowired
 	private Environment env;
