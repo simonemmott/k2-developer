@@ -23,23 +23,11 @@ public class ListViewTemplate<O> extends AbstractOutputTemplate<O> implements Ou
 	public ListViewTemplate<O> setListOf(java.lang.String listOf) { this.listOf = listOf; return this; }
 	public java.lang.String getListOf() { return listOf; }
   
-	private java.lang.String fieldLabel;
-	public ListViewTemplate<O> setFieldLabel(java.lang.String fieldLabel) { this.fieldLabel = fieldLabel; return this; }
-	public java.lang.String getFieldLabel() { return fieldLabel; }
-  
 	private List<OutputSnippet<O>> body1;
 	public ListViewTemplate<O> addToBody1(OutputSnippet<O> snippet) {
 		snippet.setContext(context);
 		if (body1 == null) { body1 = new ArrayList<OutputSnippet<O>>(); }
 		body1.add(snippet);
-		return this;
-	}
-  
-	private List<OutputSnippet<O>> body2;
-	public ListViewTemplate<O> addToBody2(OutputSnippet<O> snippet) {
-		snippet.setContext(context);
-		if (body2 == null) { body2 = new ArrayList<OutputSnippet<O>>(); }
-		body2.add(snippet);
 		return this;
 	}
   
