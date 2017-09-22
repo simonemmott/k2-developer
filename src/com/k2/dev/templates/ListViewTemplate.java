@@ -6,10 +6,8 @@ import com.k2.common.entityOutputFormatter.outputTemplate.OutputTemplate;
 import com.k2.common.entityOutputFormatter.outputSnippet.OutputSnippet;
 import com.k2.common.entityOutputFormatter.outputTemplate.AbstractOutputTemplate;
 import com.k2.common.snippets.html.HtmlButton;
-import com.k2.common.snippets.html.HtmlTitle;
-import com.k2.common.snippets.html.K2HTMLPage;
-import com.k2.common.snippets.html.K2Panel;
-import com.k2.common.snippets.html.K2TextField;
+import com.k2.common.snippets.html.HtmlHeader;
+import com.k2.common.snippets.html.HtmlPage;
 
 
 
@@ -17,7 +15,7 @@ public class ListViewTemplate<O> extends AbstractOutputTemplate<O> implements Ou
 	
 	
 	@SuppressWarnings("unchecked")
-	private K2HTMLPage<O> template = context.getSnippet(K2HTMLPage.class);
+	private HtmlPage<O> template = context.getSnippet(HtmlPage.class);
   
 	private java.lang.String listOf;
 	public ListViewTemplate<O> setListOf(java.lang.String listOf) { this.listOf = listOf; return this; }
@@ -38,11 +36,11 @@ public class ListViewTemplate<O> extends AbstractOutputTemplate<O> implements Ou
 		template.setContext(context);
     
 		{
-    			HtmlTitle<O> title = context.getSnippet(HtmlTitle.class);
+    			HtmlHeader<O> title = context.getSnippet(HtmlHeader.class);
     			if ((listOf != null) && (!"".equals(listOf))) {
-    				title.setTitle("List of "+listOf);
+    				title.setText("List of "+listOf);
     			} else {
-    				title.setTitle("List");
+    				title.setText("List");
     			}
     			title.setLevel(1);
     			template.addToBody(title);
