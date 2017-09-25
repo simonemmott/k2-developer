@@ -38,4 +38,7 @@ public class TemplateHibernateDAO extends HibernateDAO<TemplateENT, Long> implem
 		}
 	}
 
+	@Override
+	protected Class<? extends TemplateENT> getDaoType() { return TemplateENT.class; }
+
 }

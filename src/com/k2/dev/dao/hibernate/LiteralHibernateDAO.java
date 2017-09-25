@@ -12,4 +12,7 @@ import com.k2.dev.model.entity.LiteralENT;
 @Transactional
 public class LiteralHibernateDAO extends HibernateDAO<LiteralENT, Long> implements LiteralDAO {
 
+	@Override
+	protected Class<? extends LiteralENT> getDaoType() { return LiteralENT.class; }
+
 }

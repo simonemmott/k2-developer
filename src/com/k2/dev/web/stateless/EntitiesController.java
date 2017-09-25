@@ -16,44 +16,58 @@ import com.k2.common.entityOutputFormatter.outputFormatterContext.OutputFormatte
 import com.k2.common.entityOutputFormatter.outputFormatterContext.OutputFormatterContextFactory;
 import com.k2.common.snippets.SnippetFactory;
 import com.k2.common.snippets.html.HtmlPage;
+import com.k2.common.snippets.html.HtmlButton;
 import com.k2.common.snippets.html.HtmlHeader;
+import com.k2.common.snippets.html.HtmlInline;
+import com.k2.common.snippets.html.HtmlLabel;
 import com.k2.dev.model.TemplateContent;
+import com.k2.dev.model.meta.MetaModel;
 
 @Controller
 public class EntitiesController {
 	
 	private OutputFormatterContext<TemplateContent, PrintWriter> context;
 	
-	private ApplicationContext snippetContext;
-	
 	@SuppressWarnings("unchecked")
 	@Autowired
 	public EntitiesController(OutputFormatterContextFactory formatterContextFactory, ApplicationContext snippetContext) {
-		this.snippetContext = snippetContext;
 		context = (OutputFormatterContext<TemplateContent, PrintWriter>)formatterContextFactory.getContext();
+		context.setSnippetFactory(snippetContext.getBean(SnippetFactory.class));
 		context.setVerbose();
-		SnippetFactory<PrintWriter> snippetFactory = snippetContext.getBean(SnippetFactory.class);
-		context.setSnippetFactory(snippetFactory);
 	}
 	
 	
-	@SuppressWarnings("static-access")
+	@SuppressWarnings({ "static-access", "unchecked" })
 	@RequestMapping(value="/entities", method=RequestMethod.GET)
 	public String getEntities(HttpServletRequest request, HttpServletResponse response) {
 		
 		response.setContentType("text/html");
 		
-		@SuppressWarnings("unchecked")
-		HtmlPage<PrintWriter> page = snippetContext.getBean(HtmlPage.class);
-		page.setContext(context);
+		HtmlPage<PrintWriter> page = context.getSnippet(HtmlPage.class);
+		page.addStyleSheets("css/k2-default.css");
 		
 		{
-			@SuppressWarnings("unchecked")
-			HtmlHeader<PrintWriter> title = snippetContext.getBean(HtmlHeader.class);
+			HtmlHeader<PrintWriter> title = context.getSnippet(HtmlHeader.class);
 			title.setText("List of Entities");
 			title.setLevel(1);
 		
 			page.addToBody(title);
+		}
+		
+		for (MetaModel.Entities entity : MetaModel.Entities.values()) {
+			HtmlInline<PrintWriter> inline = context.getSnippet(HtmlInline.class);
+			{
+				HtmlLabel<PrintWriter> entityLabel = context.getSnippet(HtmlLabel.class);
+				entityLabel.setLabel(entity.getName());
+				inline.addToBody(entityLabel);
+			}
+			{
+				HtmlButton<PrintWriter> button = context.getSnippet(HtmlButton.class);
+				button.setLabel("Show");
+				button.setAction("entities/"+entity.getAlias());
+				inline.addToBody(button);
+			}
+			page.addToBody(inline);
 		}
 		
 		try {

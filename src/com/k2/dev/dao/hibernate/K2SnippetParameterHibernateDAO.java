@@ -60,4 +60,7 @@ public class K2SnippetParameterHibernateDAO extends HibernateDAO<K2SnippetParame
 
 	}
 
+	@Override
+	protected Class<? extends K2SnippetParameterENT> getDaoType() { return K2SnippetParameterENT.class; }
+
 }

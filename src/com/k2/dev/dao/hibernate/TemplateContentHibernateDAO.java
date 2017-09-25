@@ -49,4 +49,7 @@ public class TemplateContentHibernateDAO extends HibernateDAO<TemplateContentENT
 		return query.getResultList();
 	}
 
+	@Override
+	protected Class<? extends TemplateContentENT> getDaoType() { return TemplateContentENT.class; }
+
 }

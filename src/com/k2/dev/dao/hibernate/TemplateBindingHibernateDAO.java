@@ -35,5 +35,8 @@ public class TemplateBindingHibernateDAO extends HibernateDAO<TemplateBindingENT
 		return query.getResultList();
 	}
 
+	@Override
+	protected Class<? extends TemplateBindingENT> getDaoType() { return TemplateBindingENT.class; }
+
 
 }

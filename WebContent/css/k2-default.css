@@ -1,0 +1,5 @@
+@charset "UTF-8";
+
+.k2-inline>* {
+	display: inline-block;
+}

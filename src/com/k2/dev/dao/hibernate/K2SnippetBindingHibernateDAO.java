@@ -12,4 +12,7 @@ import com.k2.dev.model.entity.K2SnippetBindingENT;
 @Transactional
 public class K2SnippetBindingHibernateDAO extends HibernateDAO<K2SnippetBindingENT, Long> implements K2SnippetBindingDAO {
 
+	@Override
+	protected Class<? extends K2SnippetBindingENT> getDaoType() { return K2SnippetBindingENT.class; }
+
 }

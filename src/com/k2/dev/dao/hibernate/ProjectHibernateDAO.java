@@ -38,4 +38,7 @@ public class ProjectHibernateDAO extends HibernateDAO<ProjectENT, Long> implemen
 		}
 	}
 
+	@Override
+	protected Class<? extends ProjectENT> getDaoType() { return ProjectENT.class; }
+
 }

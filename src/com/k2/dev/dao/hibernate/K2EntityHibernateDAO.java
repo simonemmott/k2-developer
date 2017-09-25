@@ -14,6 +14,7 @@ import org.springframework.stereotype.Repository;
 
 import com.k2.common.dataAccess.HibernateDAO;
 import com.k2.dev.dao.K2EntityDAO;
+import com.k2.dev.model.K2Entity;
 import com.k2.dev.model.entity.K2EntityENT;
 
 @Repository("k2EntityDAO")
@@ -37,5 +38,8 @@ public class K2EntityHibernateDAO extends HibernateDAO<K2EntityENT, Long> implem
 			return null;
 		}
 	}
+
+	@Override
+	protected Class<? extends K2EntityENT> getDaoType() { return K2EntityENT.class; }
 
 }

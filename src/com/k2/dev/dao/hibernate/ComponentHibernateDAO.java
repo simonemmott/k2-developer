@@ -8,9 +8,14 @@ import org.springframework.stereotype.Repository;
 import com.k2.common.dataAccess.HibernateDAO;
 import com.k2.dev.dao.ComponentDAO;
 import com.k2.dev.model.entity.ComponentENT;
+import com.k2.dev.model.entity.K2EntityENT;
 
 @Repository("componentDAO")
 @Transactional
 public class ComponentHibernateDAO extends HibernateDAO<ComponentENT, Long> implements ComponentDAO {
+	
+	@Override
+	protected Class<? extends ComponentENT> getDaoType() { return ComponentENT.class; }
+
 
 }

@@ -59,4 +59,7 @@ public class K2PermittedContentHibernateDAO extends HibernateDAO<K2PermittedCont
 		}
 	}
 
+	@Override
+	protected Class<? extends K2PermittedContentENT> getDaoType() { return K2PermittedContentENT.class; }
+
 }

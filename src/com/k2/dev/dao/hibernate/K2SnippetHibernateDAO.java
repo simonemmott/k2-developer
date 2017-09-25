@@ -37,6 +37,9 @@ public class K2SnippetHibernateDAO extends HibernateDAO<K2SnippetENT, Long> impl
 		}
 	}
 
+	@Override
+	protected Class<? extends K2SnippetENT> getDaoType() { return K2SnippetENT.class; }
+
 
 
 }

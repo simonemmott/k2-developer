@@ -35,4 +35,7 @@ public class K2FieldHibernateDAO extends HibernateDAO<K2FieldENT, Long> implemen
 		return query.getResultList();
 	}
 
+	@Override
+	protected Class<? extends K2FieldENT> getDaoType() { return K2FieldENT.class; }
+
 }

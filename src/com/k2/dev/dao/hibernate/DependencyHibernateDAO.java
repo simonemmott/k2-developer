@@ -13,4 +13,7 @@ import com.k2.dev.model.entity.DependencyENT;
 @Transactional
 public class DependencyHibernateDAO extends HibernateDAO<DependencyENT, Long> implements DependencyDAO {
 
+	@Override
+	protected Class<? extends DependencyENT> getDaoType() { return DependencyENT.class; }
+
 }

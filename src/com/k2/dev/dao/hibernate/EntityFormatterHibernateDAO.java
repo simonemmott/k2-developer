@@ -13,4 +13,7 @@ import com.k2.dev.model.entity.EntityFormatterENT;
 @Transactional
 public class EntityFormatterHibernateDAO extends HibernateDAO<EntityFormatterENT, Long> implements EntityFormatterDAO {
 
+	@Override
+	protected Class<? extends EntityFormatterENT> getDaoType() { return EntityFormatterENT.class; }
+
 }
