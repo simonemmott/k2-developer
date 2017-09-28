@@ -45,7 +45,7 @@ public class TemplateServiceImpl extends GenericEntityService<TemplateENT, Long,
 	@Override
 	protected TemplateDAO getDAO() { return dao; }
 	@Override
-	protected Template nullBO() { return TemplateBO.NULL; }
+	public Template nullBO() { return TemplateBO.NULL; }
 	
 	@Override
 	public ServiceList<Template> listAll() { return new Lists.All(this, dao); }

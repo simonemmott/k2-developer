@@ -71,7 +71,7 @@ public class K2FieldServiceImpl extends GenericEntityService<K2FieldENT, Long, K
 	@Override
 	protected K2FieldDAO getDAO() { return dao; }
 	@Override
-	protected K2Field nullBO() { return K2FieldBO.NULL; }
+	public K2Field nullBO() { return K2FieldBO.NULL; }
 	
 	@Override
 	public ServiceList<K2Field> listAll() { return new Lists.All(this, dao); }

@@ -44,7 +44,7 @@ public class DependencyServiceImpl extends GenericEntityService<DependencyENT, L
 	@Override
 	protected DependencyDAO getDAO() { return dao; }
 	@Override
-	protected Dependency nullBO() { return DependencyBO.NULL; }
+	public Dependency nullBO() { return DependencyBO.NULL; }
 	
 	@Override
 	public ServiceList<Dependency> listAll() { return new Lists.All(this, dao); }

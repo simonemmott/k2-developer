@@ -42,5 +42,10 @@ public class EntityFormatterBO extends GenericServiceModel implements ServiceMod
 	public  K2Entity getEntityToFormat() { if (isNull()) { return K2EntityBO.NULL; } return entityService.getBO(entity.getEntityToFormat()); }
 	@Override
 	public void setEntityToFormat(K2Entity aEntity) { if (isNull()) { return; } entity.setEntityToFormat(aEntity.getEntity()); changed(); }
+	@Override
+	public Long getID() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }

@@ -48,7 +48,7 @@ public class EntityBindingServiceImpl extends GenericEntityService<EntityBinding
 	@Override
 	protected EntityBindingDAO getDAO() { return dao; }
 	@Override
-	protected EntityBinding nullBO() { return EntityBindingBO.NULL; }
+	public EntityBinding nullBO() { return EntityBindingBO.NULL; }
 	
 	@Override
 	public ServiceList<EntityBinding> listAll() { return new Lists.All(this, dao); }

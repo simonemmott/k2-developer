@@ -68,7 +68,7 @@ public class TemplateContentServiceImpl extends GenericEntityService<TemplateCon
 	@Override
 	protected TemplateContentDAO getDAO() { return dao; }
 	@Override
-	protected TemplateContent nullBO() { return TemplateContentBO.NULL; }
+	public TemplateContent nullBO() { return TemplateContentBO.NULL; }
 	
 	@Override
 	public ServiceList<TemplateContent> listAll() { return new Lists.All(this, dao); }

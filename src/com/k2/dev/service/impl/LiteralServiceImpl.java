@@ -45,7 +45,7 @@ public class LiteralServiceImpl extends GenericEntityService<LiteralENT, Long, L
 	@Override
 	protected LiteralDAO getDAO() { return dao; }
 	@Override
-	protected Literal nullBO() { return LiteralBO.NULL; }
+	public Literal nullBO() { return LiteralBO.NULL; }
 	
 	@Override
 	public ServiceList<Literal> listAll() { return new Lists.All(this, dao); }

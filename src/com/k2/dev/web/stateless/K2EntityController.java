@@ -2,6 +2,8 @@ package com.k2.dev.web.stateless;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -9,15 +11,16 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.TransactionStatus;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import com.k2.common.entityOutputFormatter.outputFormatterContext.OutputFormatterContext;
 import com.k2.common.entityOutputFormatter.outputFormatterContext.OutputFormatterContextFactory;
+import com.k2.common.interaction.Message;
 import com.k2.common.meta.MetaField;
 import com.k2.common.service.ServiceList;
-import com.k2.common.snippets.SnippetFactory;
 import com.k2.common.snippets.html.HtmlButton;
 import com.k2.common.snippets.html.HtmlHeader;
 import com.k2.common.snippets.html.HtmlInline;
@@ -28,22 +31,25 @@ import com.k2.dev.model.meta.component.MetaK2Entity;
 import com.k2.dev.service.K2EntityService;
 
 @Controller
-public class K2EntityController {
+public class K2EntityController extends AbstractStatelessEntityController<K2Entity> {
 	
 	@Autowired
 	private K2EntityService service;
-	private OutputFormatterContext<K2Entity, PrintWriter> context;
 	
-	@SuppressWarnings("unchecked")
 	@Autowired
 	public K2EntityController(OutputFormatterContextFactory formatterContextFactory, ApplicationContext snippetContext) {
-		context = (OutputFormatterContext<K2Entity, PrintWriter>)formatterContextFactory.getContext();
-		context.setSnippetFactory(snippetContext.getBean(SnippetFactory.class));
-		context.setVerbose();
+		super(formatterContextFactory, snippetContext);
 	}
+
+	@SuppressWarnings("rawtypes")
+	@Override
+	protected List<MetaField> getMetaFields() { return MetaK2Entity.Fields.getFields(); }
 	
+	@Override
+	@SuppressWarnings("rawtypes")
+	protected MetaField getMetaField(String parmName) { return  MetaK2Entity.Fields.getMetaField(parmName); }
 	
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "static-access" })
 	@RequestMapping(value="/entities/k2Entity", method=RequestMethod.GET)
 	public String getEntityList(HttpServletRequest request, HttpServletResponse response) {
 		
@@ -96,39 +102,72 @@ public class K2EntityController {
 		
 		return null;
 	}
+	
+	@RequestMapping(value="/entities/k2Entity/{id}", method=RequestMethod.POST)
+	public void postEntity(
+			@RequestParam(value="k2-action", required=false) String k2Action, 
+			@PathVariable("id") Long id, 
+			HttpServletRequest request, 
+			HttpServletResponse response) throws IOException {
+		
+		TransactionStatus status = ptm.getTransaction(getDefaultTransactionDef("StateLessK2Entity"));		
+		
+		try {
+			List<Message> messages = new ArrayList<Message>();
 
-	@SuppressWarnings("unchecked")
+			K2Entity entity = service.fetch(id);
+			if (entity.isNull()) {
+				response.reset();
+				response.sendError(HttpServletResponse.SC_NOT_FOUND, "Unable to identify entity with id: "+id);
+				return;
+			}
+			
+			if (k2Action != null) {
+				if (k2Action.equals("ok")) {
+
+					updateEntity(entity, messages, request);
+
+				}
+			}
+			
+			presentEntity(entity, messages, request, response);
+			
+		} catch (RuntimeException e) {
+			  ptm.rollback(status);
+		} finally {
+			if (!status.isCompleted()) {
+				ptm.commit(status);
+			}
+		}
+	}
+
+	
 	@RequestMapping(value="/entities/k2Entity/{id}", method=RequestMethod.GET)
 	public void getEntity(@PathVariable("id") Long id, HttpServletRequest request, HttpServletResponse response) throws IOException {
 		
-		response.setContentType("text/html");
-		
-		K2Entity entity = service.fetch(id);
+		TransactionStatus status = ptm.getTransaction(getDefaultTransactionDef("StateLessK2Entity"));
 
-		
-		if (entity.isNull()) {
-			response.reset();
-			response.sendError(HttpServletResponse.SC_NOT_FOUND, "Unable to identify entity with id: "+id);
-			return;
-		}
-		
-		HtmlPage<PrintWriter> page = context.getSnippet(HtmlPage.class);
-		page.addStyleSheets("css/k2-default.css");
-		{
-			HtmlHeader<PrintWriter> title = context.getSnippet(HtmlHeader.class);
-			title.setText("K2 Entity "+entity.getEntityName());
-			title.setLevel(1);
-		
-			page.addToBody(title);
-		}
-		
-		for (@SuppressWarnings({"rawtypes" }) MetaField field : MetaK2Entity.Fields.getFields()) {
-			
-			
-		}
-						
-		page.output(response.getWriter());
+		try {
 
+			List<Message> messages = new ArrayList<Message>();
+			K2Entity entity = service.fetch(id);
+		
+			if (entity.isNull()) {
+				response.reset();
+				response.sendError(HttpServletResponse.SC_NOT_FOUND, "Unable to identify entity with id: "+id);
+				return;
+			}
+			
+			presentEntity(entity, messages, request, response);
+
+		} catch (RuntimeException e) {
+			  ptm.rollback(status);
+		} finally {
+			if (!status.isCompleted()) {
+				ptm.commit(status);
+			}
+		}
+		return;
 	}
 	
 }

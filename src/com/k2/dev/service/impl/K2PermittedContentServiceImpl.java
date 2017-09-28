@@ -84,7 +84,7 @@ public class K2PermittedContentServiceImpl extends GenericEntityService<K2Permit
 	}
 
 	@Override
-	protected K2PermittedContent nullBO() { return K2PermittedContentBO.NULL; }
+	public K2PermittedContent nullBO() { return K2PermittedContentBO.NULL; }
 
 	@Override
 	public ServiceList<K2PermittedContent> listAll() { return new Lists.All(this, dao); }

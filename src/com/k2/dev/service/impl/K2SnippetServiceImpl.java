@@ -40,7 +40,7 @@ public class K2SnippetServiceImpl extends GenericEntityService<K2SnippetENT, Lon
 	protected K2SnippetDAO getDAO() { return dao; }
 
 	@Override
-	protected K2Snippet nullBO() { return K2SnippetBO.NULL; }
+	public K2Snippet nullBO() { return K2SnippetBO.NULL; }
 	@Override
 	public K2Snippet getBO(K2SnippetENT entity) { 
 		if (entity == null ) { return nullBO(); }

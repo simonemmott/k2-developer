@@ -43,7 +43,7 @@ public class K2EntityServiceImpl extends GenericEntityService<K2EntityENT, Long,
 	@Override
 	protected K2EntityDAO getDAO() { return dao; }
 	@Override
-	protected K2Entity nullBO() { return K2EntityBO.NULL; }
+	public K2Entity nullBO() { return K2EntityBO.NULL; }
 	
 	@Override
 	public ServiceList<K2Entity> listAll() { return new Lists.All(this, dao); }

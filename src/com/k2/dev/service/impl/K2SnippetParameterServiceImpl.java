@@ -85,7 +85,7 @@ public class K2SnippetParameterServiceImpl extends GenericEntityService<K2Snippe
 	@Override
 	protected K2SnippetParameterDAO getDAO() { return dao; }
 	@Override
-	protected K2SnippetParameter nullBO() { return K2SnippetParameterBO.NULL; }
+	public K2SnippetParameter nullBO() { return K2SnippetParameterBO.NULL; }
 
 	@Override
 	public K2SnippetParameter newBO(EntityInitialValues<K2SnippetParameterENT> init) { 

@@ -57,7 +57,7 @@ public class TemplateBindingServiceImpl extends GenericEntityService<TemplateBin
 	@Override
 	protected TemplateBindingDAO getDAO() { return dao; }
 	@Override
-	protected TemplateBinding nullBO() { return TemplateBindingBO.NULL; }
+	public TemplateBinding nullBO() { return TemplateBindingBO.NULL; }
 	
 	@Override
 	public ServiceList<TemplateBinding> listAll() { return new Lists.All(this, dao); }

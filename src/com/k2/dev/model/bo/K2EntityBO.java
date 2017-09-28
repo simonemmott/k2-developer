@@ -36,6 +36,8 @@ public class K2EntityBO extends ComponentBO implements ServiceModel, K2Entity, C
 	private K2EntityENT entity;
 	@Override
 	public K2EntityENT getEntity() { return entity; }
+	
+	public String getIdentity() { return getName(); }
 
 	@Override
 	public Long getID() { if (isNull()) { return null; } return entity.getID(); }
@@ -71,8 +73,12 @@ public class K2EntityBO extends ComponentBO implements ServiceModel, K2Entity, C
 	public String getInheritanceJoinColumn() { if (isNull()) { return null; } return entity.getInheritanceJoinColumn(); }
 	@Override
 	public void setInheritanceJoinColumn(String joinColumn) { if (isNull()) { return; } entity.setInheritanceJoinColumn(joinColumn); changed(); }
+
 	@Override
 	public ServiceList<K2Field> getFields() { return k2FieldService.listForEntity(this); }
+
+	@Override
+	public ServiceList<K2Entity> getExtendableEntities() { return service.listAll(); }
 
 
 	

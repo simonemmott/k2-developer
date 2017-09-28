@@ -32,5 +32,7 @@ public interface K2Entity  extends ServiceModel, Component {
 	public void setInheritanceJoinColumn(String joinColumn);
 
 	public ServiceList<K2Field> getFields();
+	
+	public ServiceList<K2Entity> getExtendableEntities();
 
 }

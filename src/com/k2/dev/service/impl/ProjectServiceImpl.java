@@ -45,7 +45,7 @@ public class ProjectServiceImpl extends GenericEntityService<ProjectENT, Long, P
 	@Override
 	protected ProjectDAO getDAO() { return dao; }
 	@Override
-	protected Project nullBO() { return ProjectBO.NULL; }
+	public Project nullBO() { return ProjectBO.NULL; }
 	
 	@Override
 	public ServiceList<Project> listAll() { return new Lists.All(this, dao); }

@@ -42,5 +42,10 @@ public class EntityBindingBO extends GenericServiceModel implements ServiceModel
 	public K2Field getBindingField() { if (isNull()) { return K2FieldBO.NULL; } return fieldService.getBO(entity.getBindingField()); }
 	@Override
 	public void setBindingField(K2Field bindingField) { if (isNull()) { return; } entity.setBindingField(bindingField.getEntity()); changed(); }
+	@Override
+	public Long getID() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 }

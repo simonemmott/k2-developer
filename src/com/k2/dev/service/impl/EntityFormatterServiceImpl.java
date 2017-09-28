@@ -45,7 +45,7 @@ public class EntityFormatterServiceImpl extends GenericEntityService<EntityForma
 	@Override
 	protected EntityFormatterDAO getDAO() { return dao; }
 	@Override
-	protected EntityFormatter nullBO() { return EntityFormatterBO.NULL; }
+	public EntityFormatter nullBO() { return EntityFormatterBO.NULL; }
 	
 	@Override
 	public ServiceList<EntityFormatter> listAll() { return new Lists.All(this, dao); }

@@ -60,7 +60,7 @@ public class ComponentServiceImpl extends GenericEntityService<ComponentENT, Lon
 
 	
 	@Override
-	protected Component nullBO() { return ComponentBO.NULL; }
+	public Component nullBO() { return ComponentBO.NULL; }
 	@Override
 	public Component getBO(ComponentENT entity) { 
 		if (entity == null ) { return nullBO(); }

@@ -45,7 +45,7 @@ public class K2SnippetBindingServiceImpl extends GenericEntityService<K2SnippetB
 	@Override
 	protected K2SnippetBindingDAO getDAO() { return dao; }
 	@Override
-	protected K2SnippetBinding nullBO() { return K2SnippetBindingBO.NULL; }
+	public K2SnippetBinding nullBO() { return K2SnippetBindingBO.NULL; }
 	
 	@Override
 	public ServiceList<K2SnippetBinding> listAll() { return new Lists.All(this, dao); }

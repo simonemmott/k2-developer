@@ -91,7 +91,7 @@ public class K2SnippetContainerServiceImpl extends GenericEntityService<K2Snippe
 	}
 
 	@Override
-	protected K2SnippetContainer nullBO() { return K2SnippetContainerBO.NULL; }
+	public K2SnippetContainer nullBO() { return K2SnippetContainerBO.NULL; }
 
 	@Override
 	public ServiceList<K2SnippetContainer> listAll() { return new Lists.All(this, dao); }
