@@ -26,6 +26,7 @@ import com.k2.common.snippets.html.HtmlHeader;
 import com.k2.common.snippets.html.HtmlInline;
 import com.k2.common.snippets.html.HtmlLabel;
 import com.k2.common.snippets.html.HtmlPage;
+import com.k2.common.web.AbstractStatelessEntityController;
 import com.k2.dev.model.K2Entity;
 import com.k2.dev.model.meta.component.MetaK2Entity;
 import com.k2.dev.service.K2EntityService;
