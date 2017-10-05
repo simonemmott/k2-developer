@@ -30,8 +30,8 @@ public class K2FieldENT implements ID {
 	@ManyToOne(fetch=FetchType.LAZY, targetEntity=K2EntityENT.class, optional=false)
 	@JoinColumn(name="EntityID", nullable=false)
 	protected K2EntityENT k2Entity;
-	public K2EntityENT getEntity() { return k2Entity; } 
-	public void setEntity(K2EntityENT k2Entity) { this.k2Entity = k2Entity; }
+	public K2EntityENT getK2Entity() { return k2Entity; } 
+	public void setK2Entity(K2EntityENT k2Entity) { this.k2Entity = k2Entity; }
 	
 	@Column(name="ColumnLength")
 	protected Integer columnLength;

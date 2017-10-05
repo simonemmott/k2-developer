@@ -6,15 +6,20 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.k2.common.meta.MetaEntity;
 import com.k2.common.service.EntityInitialValues;
 import com.k2.common.service.GenericEntityService;
 import com.k2.common.service.GenericServiceList;
 import com.k2.common.service.ServiceList;
 import com.k2.common.service.GenericServiceModel.PersistenceState;
 import com.k2.dev.dao.LiteralDAO;
+import com.k2.dev.model.K2Snippet;
 import com.k2.dev.model.Literal;
+import com.k2.dev.model.bo.K2SnippetBO;
 import com.k2.dev.model.bo.LiteralBO;
+import com.k2.dev.model.entity.K2SnippetENT;
 import com.k2.dev.model.entity.LiteralENT;
+import com.k2.dev.model.meta.MetaModel;
 import com.k2.dev.service.LiteralService;
 
 @Service("literalService")
@@ -27,11 +32,13 @@ public class LiteralServiceImpl extends GenericEntityService<LiteralENT, Long, L
 			protected LiteralDAO dao;
 			protected LiteralService service;
 			public LiteralServiceList(LiteralService service, LiteralDAO dao) { this.service = service; this.dao = dao; }
+			@Override public MetaEntity getMetaEntity() { return MetaModel.Entities.LITERAL; }
 		}
 
 		public static class All extends LiteralServiceList implements ServiceList<Literal> {
 			public All(LiteralService service, LiteralDAO dao) { super(service, dao); }
 			@Override public Literal newBO() { return service.newBO(); }
+			@Override public Literal newBO(Long id) { return service.newBO(id); }
 			@Override protected List<LiteralENT> getList() { return dao.list(); }
 			@Override protected Literal getBO(LiteralENT entity) { return service.getBO(entity); }
 		}
@@ -51,9 +58,14 @@ public class LiteralServiceImpl extends GenericEntityService<LiteralENT, Long, L
 	public ServiceList<Literal> listAll() { return new Lists.All(this, dao); }
 	
 	@Override
-	public Literal newBO(EntityInitialValues<LiteralENT> init) {
-		return (Literal) serviceContext.putBO(new LiteralBO(prepareNewEntity(new LiteralENT(), "Literal.ID", init), PersistenceState.NEW)); 
+	public Literal newBO(Long id, EntityInitialValues<LiteralENT> init) { 
+		if (id == null) {
+			return (Literal) serviceContext.putBO(new LiteralBO(prepareNewEntity(new LiteralENT(), "EntityBinding.ID", init), PersistenceState.NEW)); 
+		} else {
+			return (Literal) serviceContext.putBO(new LiteralBO(prepareNewEntity(new LiteralENT(), id, init), PersistenceState.NEW)); 
+		}
 	}
+
 	
 	@Override
 	public Literal getBO(LiteralENT entity) {

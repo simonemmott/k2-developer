@@ -4,11 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
 
 import com.k2.common.service.ServiceModel;
+import com.k2.common.meta.MetaEntity;
 import com.k2.common.service.EntityService;
 import com.k2.common.service.GenericServiceModel;
 import com.k2.dev.model.EntityFormatter;
 import com.k2.dev.model.K2Entity;
 import com.k2.dev.model.entity.EntityFormatterENT;
+import com.k2.dev.model.meta.MetaModel;
 import com.k2.dev.service.EntityFormatterService;
 import com.k2.dev.service.K2EntityService;
 
@@ -29,6 +31,9 @@ public class EntityFormatterBO extends GenericServiceModel implements ServiceMod
 	public EntityFormatterBO(PersistenceState state) { super(state); }
 	public EntityFormatterBO(EntityFormatterENT entity, PersistenceState state) { super(state); this.entity = entity; }
 	
+	@Override
+	public MetaEntity getMetaEntity() { return MetaModel.Entities.ENTITY_FORMATTER; }
+		
 	@Override
 	public boolean isNull() { return (this == NULL); }
 	@Override

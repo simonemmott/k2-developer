@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.k2.common.fieldSet.FieldSet;
 import com.k2.common.interaction.FieldHandler;
 import com.k2.common.interaction.ListHandler;
 import com.k2.common.meta.MetaField;
@@ -20,8 +21,12 @@ import com.k2.common.snippets.html.HtmlTextField;
 import com.k2.common.util.StringUtil;
 import com.k2.dev.model.K2Entity;
 import com.k2.dev.model.K2Field;
+import com.k2.dev.model.meta.MetaModel;
+import com.k2.dev.model.meta.MetaModel.Entities;
 import com.k2.dev.model.meta.component.MetaComponent.FieldHandlers;
 import com.k2.dev.service.K2EntityService;
+import com.k2.dev.web.stateless.K2EntityController;
+import com.k2.dev.web.stateless.K2FieldController;
 
 @SuppressWarnings({"unused"})
 public class MetaK2Entity extends MetaComponent {
@@ -115,6 +120,7 @@ public class MetaK2Entity extends MetaComponent {
 			@Override public String get() { return entity.getEntityName(); }
 			@Override public void set(String value) { entity.setEntityName(value); }
 			@Override public void setFromUI(String value) { set(value); }
+			@Override public String getForUI() { return get(); }
 		}
 		
 		public static class EXTENDS_ENTITY extends FieldHandler<K2Entity, K2Entity> {
@@ -122,6 +128,7 @@ public class MetaK2Entity extends MetaComponent {
 			@Override public K2Entity get() { return entity.getExtendsEntity(); }
 			@Override public void set(K2Entity value) { entity.setExtendsEntity(value); }
 			@Override public void setFromUI(String value) { }
+			@Override public String getForUI() { return get().getIdentity(); }
 		}
 		
 		public static class INHERITANCE_JOIN_COLUMN extends FieldHandler<K2Entity, String> {
@@ -129,6 +136,7 @@ public class MetaK2Entity extends MetaComponent {
 			@Override public String get() { return entity.getInheritanceJoinColumn(); }
 			@Override public void set(String value) { entity.setInheritanceJoinColumn(value); }
 			@Override public void setFromUI(String value) { set(value); }
+			@Override public String getForUI() { return get(); }
 		}
 		
 		public static class TABLE_NAME extends FieldHandler<K2Entity, String> {
@@ -136,24 +144,30 @@ public class MetaK2Entity extends MetaComponent {
 			@Override public String get() { return entity.getTableName(); }
 			@Override public void set(String value) { entity.setTableName(value); }
 			@Override public void setFromUI(String value) { set(value); }
+			@Override public String getForUI() { return get(); }
 		}
 		
 	}
 
-	
+	public static FieldSet defaultFieldSet = new FieldSet(Fields.NAME, Fields.PACKAGE_NAME, Fields.ENTITYNAME, Fields.EXTENDS_ENTITY);
+		
 	public static class Lists extends MetaComponent.Lists {
 		public static MetaList<K2Entity, K2Field> FIELDS = new MetaList<K2Entity, K2Field>(
 				true, // Enabled
 				"fields", // Alias
 				"Fields", // Default label
 				ListHandlers.FIELDS.class, // List handler class
+				K2FieldController.class, // Stateless controller class
+				new FieldSet(MetaK2Field.Fields.ENTITY, MetaK2Field.Fields.NAME, MetaK2Field.Fields.DATA_TYPE), // Default field set
 				true // Allow new
 				);
 		public static MetaList<K2Entity, K2Entity> EXTENDABLE_ENTITIES = new MetaList<K2Entity, K2Entity>(
 				true, // Enabled
 				"extendableEntities", // Alias
 				"Extendable entities", // Default label
-				ListHandlers.FIELDS.class, // List handler class
+				ListHandlers.EXTENDABLE_ENTITIES.class, // List handler class
+				K2EntityController.class, // Stateless controller class
+				defaultFieldSet, // Default field set
 				true // Allow new
 				);
 		@SuppressWarnings("rawtypes")
@@ -169,11 +183,12 @@ public class MetaK2Entity extends MetaComponent {
 					lists.put(metaList.alias, metaList); orderedLists.add(metaList);
 				}
 				lists.put(FIELDS.alias, FIELDS); orderedLists.add(FIELDS);
+				lists.put(EXTENDABLE_ENTITIES.alias, EXTENDABLE_ENTITIES); orderedLists.add(EXTENDABLE_ENTITIES);
 			}
 			return orderedLists;
 		}
 		@SuppressWarnings("rawtypes")
-		public static MetaList getMetaList(String alias) { return lists.get(alias); }
+		public static MetaList getMetaList(String alias) { getLists(); return lists.get(alias); }
 
 	}
 	

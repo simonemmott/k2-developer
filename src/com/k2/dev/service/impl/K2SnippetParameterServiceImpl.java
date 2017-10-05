@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.k2.common.meta.MetaEntity;
 import com.k2.common.service.EntityInitialValues;
 import com.k2.common.service.GenericEntityService;
 import com.k2.common.service.GenericServiceList;
@@ -13,11 +14,15 @@ import com.k2.common.service.ServiceList;
 import com.k2.common.service.GenericServiceModel.PersistenceState;
 import com.k2.dev.dao.K2SnippetParameterDAO;
 import com.k2.dev.model.K2Snippet;
+import com.k2.dev.model.K2SnippetContainer;
 import com.k2.dev.model.K2SnippetParameter;
 import com.k2.dev.model.Template;
+import com.k2.dev.model.bo.K2SnippetContainerBO;
 import com.k2.dev.model.bo.K2SnippetParameterBO;
+import com.k2.dev.model.entity.K2SnippetContainerENT;
 import com.k2.dev.model.entity.K2SnippetENT;
 import com.k2.dev.model.entity.K2SnippetParameterENT;
+import com.k2.dev.model.meta.MetaModel;
 import com.k2.dev.service.K2SnippetParameterService;
 
 @Service("snippetParameterService")
@@ -33,10 +38,12 @@ public class K2SnippetParameterServiceImpl extends GenericEntityService<K2Snippe
 				this.service = service; 
 				this.dao = dao; 
 			}
+			@Override public MetaEntity getMetaEntity() { return MetaModel.Entities.SNIPPET_PARAMETER; }
 		}
 		public static class All extends K2SnippetParameterServiceList implements ServiceList<K2SnippetParameter> {
 			public All(K2SnippetParameterService service, K2SnippetParameterDAO dao) { super(service, dao); }
 			@Override public K2SnippetParameter newBO() { return service.newBO(); }
+			@Override public K2SnippetParameter newBO(Long id) { return service.newBO(id); }
 			@Override protected List<K2SnippetParameterENT> getList() { return dao.list(); }
 			@Override protected K2SnippetParameter getBO(K2SnippetParameterENT entity) { return service.getBO(entity); }
 		}
@@ -47,7 +54,8 @@ public class K2SnippetParameterServiceImpl extends GenericEntityService<K2Snippe
 				super(service, dao); 
 				this.snippet = snippet;
 			}
-			@Override public K2SnippetParameter newBO() { return service.newBO(new Init.ListForSnippet(snippet.getEntity())); }
+			@Override public K2SnippetParameter newBO() { return service.newBO(null, new Init.ListForSnippet(snippet.getEntity())); }
+			@Override public K2SnippetParameter newBO(Long id) { return service.newBO(id, new Init.ListForSnippet(snippet.getEntity())); }
 			@Override protected List<K2SnippetParameterENT> getList() { return dao.listForSnippet(snippet.getEntity()); }
 			@Override protected K2SnippetParameter getBO(K2SnippetParameterENT entity) { return service.getBO(entity); }
 		}
@@ -58,7 +66,8 @@ public class K2SnippetParameterServiceImpl extends GenericEntityService<K2Snippe
 				super(service, dao); 
 				this.template = template;
 			}
-			@Override public K2SnippetParameter newBO() { return service.newBO(new Init.ListForSnippet(template.getEntity())); }
+			@Override public K2SnippetParameter newBO() { return service.newBO(null, new Init.ListForSnippet(template.getEntity())); }
+			@Override public K2SnippetParameter newBO(Long id) { return service.newBO(id, new Init.ListForSnippet(template.getEntity())); }
 			@Override protected List<K2SnippetParameterENT> getList() { return dao.listForSnippet(template.getEntity()); }
 			@Override protected K2SnippetParameter getBO(K2SnippetParameterENT entity) { return service.getBO(entity); }
 		}
@@ -88,9 +97,14 @@ public class K2SnippetParameterServiceImpl extends GenericEntityService<K2Snippe
 	public K2SnippetParameter nullBO() { return K2SnippetParameterBO.NULL; }
 
 	@Override
-	public K2SnippetParameter newBO(EntityInitialValues<K2SnippetParameterENT> init) { 
-		return (K2SnippetParameter) serviceContext.putBO(new K2SnippetParameterBO(prepareNewEntity(new K2SnippetParameterENT(), "SnippetParameter.ID", init), PersistenceState.NEW)); 
+	public K2SnippetParameter newBO(Long id, EntityInitialValues<K2SnippetParameterENT> init) { 
+		if (id == null) {
+			return (K2SnippetParameter) serviceContext.putBO(new K2SnippetParameterBO(prepareNewEntity(new K2SnippetParameterENT(), "EntityBinding.ID", init), PersistenceState.NEW)); 
+		} else {
+			return (K2SnippetParameter) serviceContext.putBO(new K2SnippetParameterBO(prepareNewEntity(new K2SnippetParameterENT(), id, init), PersistenceState.NEW)); 
+		}
 	}
+
 
 	@Override
 	public ServiceList<K2SnippetParameter> listForSnippet(K2Snippet snippet) { return new Lists.ForSnippet(this, dao, snippet); }

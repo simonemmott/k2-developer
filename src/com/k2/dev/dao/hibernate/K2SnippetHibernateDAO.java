@@ -27,7 +27,7 @@ public class K2SnippetHibernateDAO extends HibernateDAO<K2SnippetENT, Long> impl
 		Root<K2SnippetENT> root = criteria.from(K2SnippetENT.class);
 		ParameterExpression<String> nameParm = builder.parameter(String.class);
 		criteria.select(root).where(builder.equal(root.get("name"), nameParm));
-		TypedQuery<K2SnippetENT> query = em.createQuery(criteria);
+		TypedQuery<K2SnippetENT> query = getEM().createQuery(criteria);
 		query.setParameter(nameParm, name);
 
 		try {

@@ -4,11 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
 
 import com.k2.common.service.ServiceModel;
+import com.k2.common.meta.MetaEntity;
 import com.k2.common.service.EntityService;
 import com.k2.common.service.GenericServiceModel;
 import com.k2.dev.model.K2PermittedContent;
 import com.k2.dev.model.K2SnippetContainer;
 import com.k2.dev.model.entity.K2PermittedContentENT;
+import com.k2.dev.model.meta.MetaModel;
 import com.k2.dev.service.K2PermittedContentService;
 import com.k2.dev.service.K2SnippetContainerService;
 
@@ -29,6 +31,9 @@ public class K2PermittedContentBO extends GenericServiceModel implements Service
     public K2PermittedContentBO(PersistenceState state) { super(state); }
     public K2PermittedContentBO(K2PermittedContentENT entity, PersistenceState state) { super(state); this.entity = entity; }
 
+	@Override
+	public MetaEntity getMetaEntity() { return MetaModel.Entities.PERMITTED_CONTENT; }
+		
 	@Override
 	public boolean isNull() { return (this == NULL); }
 	@Override

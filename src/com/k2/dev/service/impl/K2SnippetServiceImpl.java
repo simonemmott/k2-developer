@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.k2.common.meta.MetaEntity;
 import com.k2.common.service.EntityInitialValues;
 import com.k2.common.service.GenericServiceModel.PersistenceState;
 import com.k2.common.service.GenericEntityService;
@@ -11,8 +13,12 @@ import com.k2.common.service.GenericServiceList;
 import com.k2.common.service.ServiceList;
 import com.k2.dev.dao.K2SnippetDAO;
 import com.k2.dev.model.K2Snippet;
+import com.k2.dev.model.K2SnippetParameter;
 import com.k2.dev.model.bo.K2SnippetBO;
+import com.k2.dev.model.bo.K2SnippetParameterBO;
 import com.k2.dev.model.entity.K2SnippetENT;
+import com.k2.dev.model.entity.K2SnippetParameterENT;
+import com.k2.dev.model.meta.MetaModel;
 import com.k2.dev.service.K2SnippetService;
 
 @Service("snippetService")
@@ -23,10 +29,12 @@ public class K2SnippetServiceImpl extends GenericEntityService<K2SnippetENT, Lon
 			protected K2SnippetDAO dao;
 			protected K2SnippetService service;
 			public K2SnippetServiceList(K2SnippetService service, K2SnippetDAO dao) { this.service = service; this.dao = dao; }
+			@Override public MetaEntity getMetaEntity() { return MetaModel.Entities.SNIPPET; }
 		}
 		public static class All extends K2SnippetServiceList implements ServiceList<K2Snippet> {
 			public All(K2SnippetService service, K2SnippetDAO dao) { super(service, dao); }
 			@Override public K2Snippet newBO() { return service.newBO(); }
+			@Override public K2Snippet newBO(Long id) { return service.newBO(id); }
 			@Override protected List<K2SnippetENT> getList() { return dao.list(); }
 			@Override protected K2Snippet getBO(K2SnippetENT entity) { return service.getBO(entity); }
 		}
@@ -47,10 +55,16 @@ public class K2SnippetServiceImpl extends GenericEntityService<K2SnippetENT, Lon
 		if (serviceContext.getBO(entity) != null) { return (K2Snippet) serviceContext.getBO(entity); }
 		return (K2Snippet) serviceContext.putBO(new K2SnippetBO(entity, PersistenceState.PERSISTED));
 	}
+	
 	@Override
-	public K2Snippet newBO(EntityInitialValues<K2SnippetENT> init) { 
-		return (K2Snippet) serviceContext.putBO(new K2SnippetBO(prepareNewEntity(new K2SnippetENT(), "Snippet.ID", init), PersistenceState.NEW)); 
+	public K2Snippet newBO(Long id, EntityInitialValues<K2SnippetENT> init) { 
+		if (id == null) {
+			return (K2Snippet) serviceContext.putBO(new K2SnippetBO(prepareNewEntity(new K2SnippetENT(), "EntityBinding.ID", init), PersistenceState.NEW)); 
+		} else {
+			return (K2Snippet) serviceContext.putBO(new K2SnippetBO(prepareNewEntity(new K2SnippetENT(), id, init), PersistenceState.NEW)); 
+		}
 	}
+
 
 	@Override
 	public K2Snippet fetchForName(String name) { return getBO(dao.fetchForName(name)); }

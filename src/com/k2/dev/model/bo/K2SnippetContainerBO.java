@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
 
 import com.k2.common.service.ServiceModel;
+import com.k2.common.meta.MetaEntity;
 import com.k2.common.service.EntityService;
 import com.k2.common.service.GenericServiceModel;
 import com.k2.common.service.ServiceList;
@@ -11,6 +12,7 @@ import com.k2.dev.model.K2PermittedContent;
 import com.k2.dev.model.K2Snippet;
 import com.k2.dev.model.K2SnippetContainer;
 import com.k2.dev.model.entity.K2SnippetContainerENT;
+import com.k2.dev.model.meta.MetaModel;
 import com.k2.dev.service.K2PermittedContentService;
 import com.k2.dev.service.K2SnippetContainerService;
 import com.k2.dev.service.K2SnippetService;
@@ -35,6 +37,9 @@ public class K2SnippetContainerBO extends GenericServiceModel implements Service
 	public K2SnippetContainerBO(PersistenceState state) { super(state); }
 	public K2SnippetContainerBO(K2SnippetContainerENT entity, PersistenceState state) { super(state); this.entity = entity; }
 
+	@Override
+	public MetaEntity getMetaEntity() { return MetaModel.Entities.SNIPPET_CONTAINER; }
+		
 	@Override
 	public boolean isNull() { return (this == NULL); }
 	@Override

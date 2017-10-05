@@ -30,7 +30,7 @@ public class K2FieldHibernateDAO extends HibernateDAO<K2FieldENT, Long> implemen
 		Root<K2FieldENT> root = criteria.from(K2FieldENT.class);
 		ParameterExpression<K2EntityENT> parm = builder.parameter(K2EntityENT.class);
 		criteria.select(root).where(builder.equal(root.get("k2Entity"), parm));
-		TypedQuery<K2FieldENT> query = em.createQuery(criteria);
+		TypedQuery<K2FieldENT> query = getEM().createQuery(criteria);
 		query.setParameter(parm, entity);
 		return query.getResultList();
 	}

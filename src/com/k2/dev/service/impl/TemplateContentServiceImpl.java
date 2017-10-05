@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.k2.common.meta.MetaEntity;
 import com.k2.common.service.EntityInitialValues;
 import com.k2.common.service.GenericEntityService;
 import com.k2.common.service.GenericServiceList;
@@ -13,9 +14,13 @@ import com.k2.common.service.ServiceList;
 import com.k2.common.service.GenericServiceModel.PersistenceState;
 import com.k2.dev.dao.TemplateContentDAO;
 import com.k2.dev.model.Template;
+import com.k2.dev.model.TemplateBinding;
 import com.k2.dev.model.TemplateContent;
+import com.k2.dev.model.bo.TemplateBindingBO;
 import com.k2.dev.model.bo.TemplateContentBO;
+import com.k2.dev.model.entity.TemplateBindingENT;
 import com.k2.dev.model.entity.TemplateContentENT;
+import com.k2.dev.model.meta.MetaModel;
 import com.k2.dev.service.TemplateContentService;
 
 @Service("templateContentService")
@@ -28,11 +33,13 @@ public class TemplateContentServiceImpl extends GenericEntityService<TemplateCon
 			protected TemplateContentDAO dao;
 			protected TemplateContentService service;
 			public TemplateContentServiceList(TemplateContentService service, TemplateContentDAO dao) { this.service = service; this.dao = dao; }
+			@Override public MetaEntity getMetaEntity() { return MetaModel.Entities.TEMPLATE_CONTENT; }
 		}
 
 		public static class All extends TemplateContentServiceList implements ServiceList<TemplateContent> {
 			public All(TemplateContentService service, TemplateContentDAO dao) { super(service, dao); }
 			@Override public TemplateContent newBO() { return service.newBO(); }
+			@Override public TemplateContent newBO(Long id) { return service.newBO(id); }
 			@Override protected List<TemplateContentENT> getList() { return dao.list(); }
 			@Override protected TemplateContent getBO(TemplateContentENT entity) { return service.getBO(entity); }
 		}
@@ -44,6 +51,7 @@ public class TemplateContentServiceImpl extends GenericEntityService<TemplateCon
 				this.template = template;
 				}
 			@Override public TemplateContent newBO() { return service.newBO(); }
+			@Override public TemplateContent newBO(Long id) { return service.newBO(id); }
 			@Override protected List<TemplateContentENT> getList() { return dao.listForTemplate(template.getEntity()); }
 			@Override protected TemplateContent getBO(TemplateContentENT entity) { return service.getBO(entity); }
 		}
@@ -55,6 +63,7 @@ public class TemplateContentServiceImpl extends GenericEntityService<TemplateCon
 				this.templateContent = templateContent;
 				}
 			@Override public TemplateContent newBO() { return service.newBO(); }
+			@Override public TemplateContent newBO(Long id) { return service.newBO(id); }
 			@Override protected List<TemplateContentENT> getList() { return dao.listForTemplateContent(templateContent.getEntity()); }
 			@Override protected TemplateContent getBO(TemplateContentENT entity) { return service.getBO(entity); }
 		}
@@ -74,9 +83,14 @@ public class TemplateContentServiceImpl extends GenericEntityService<TemplateCon
 	public ServiceList<TemplateContent> listAll() { return new Lists.All(this, dao); }
 	
 	@Override
-	public TemplateContent newBO(EntityInitialValues<TemplateContentENT> init) {
-		return (TemplateContent) serviceContext.putBO(new TemplateContentBO(prepareNewEntity(new TemplateContentENT(), "TemplateContent.ID", init), PersistenceState.NEW)); 
+	public TemplateContent newBO(Long id, EntityInitialValues<TemplateContentENT> init) { 
+		if (id == null) {
+			return (TemplateContent) serviceContext.putBO(new TemplateContentBO(prepareNewEntity(new TemplateContentENT(), "EntityBinding.ID", init), PersistenceState.NEW)); 
+		} else {
+			return (TemplateContent) serviceContext.putBO(new TemplateContentBO(prepareNewEntity(new TemplateContentENT(), id, init), PersistenceState.NEW)); 
+		}
 	}
+
 	@Override
 	public TemplateContent getBO(TemplateContentENT entity) {
 		if (entity == null ) { return nullBO(); }

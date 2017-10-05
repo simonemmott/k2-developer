@@ -6,15 +6,20 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.k2.common.meta.MetaEntity;
 import com.k2.common.service.EntityInitialValues;
 import com.k2.common.service.GenericEntityService;
 import com.k2.common.service.GenericServiceList;
 import com.k2.common.service.ServiceList;
 import com.k2.common.service.GenericServiceModel.PersistenceState;
 import com.k2.dev.dao.K2EntityDAO;
+import com.k2.dev.model.EntityFormatter;
 import com.k2.dev.model.K2Entity;
+import com.k2.dev.model.bo.EntityFormatterBO;
 import com.k2.dev.model.bo.K2EntityBO;
+import com.k2.dev.model.entity.EntityFormatterENT;
 import com.k2.dev.model.entity.K2EntityENT;
+import com.k2.dev.model.meta.MetaModel;
 import com.k2.dev.service.K2EntityService;
 
 @Service("entityService")
@@ -26,11 +31,13 @@ public class K2EntityServiceImpl extends GenericEntityService<K2EntityENT, Long,
 			protected K2EntityDAO dao;
 			protected K2EntityService service;
 			public K2EntityServiceList(K2EntityService service, K2EntityDAO dao) { this.service = service; this.dao = dao; }
+			@Override public MetaEntity getMetaEntity() { return MetaModel.Entities.K2ENTITY; }
 		}
 
 		public static class All extends K2EntityServiceList implements ServiceList<K2Entity> {
 			public All(K2EntityService service, K2EntityDAO dao) { super(service, dao); }
 			@Override public K2Entity newBO() { return service.newBO(); }
+			@Override public K2Entity newBO(Long id) { return service.newBO(id); }
 			@Override protected List<K2EntityENT> getList() { return dao.list(); }
 			@Override protected K2Entity getBO(K2EntityENT entity) { return service.getBO(entity); }
 		}
@@ -49,9 +56,16 @@ public class K2EntityServiceImpl extends GenericEntityService<K2EntityENT, Long,
 	public ServiceList<K2Entity> listAll() { return new Lists.All(this, dao); }
 	
 	@Override
-	public K2Entity newBO(EntityInitialValues<K2EntityENT> init) {
-		return (K2Entity) serviceContext.putBO(new K2EntityBO(prepareNewEntity(new K2EntityENT(), "Entity.ID", init), PersistenceState.NEW)); 
+	public K2Entity newBO(Long id, EntityInitialValues<K2EntityENT> init) { 
+		if (id == null) {
+			return (K2Entity) serviceContext.putBO(new K2EntityBO(prepareNewEntity(new K2EntityENT(), "EntityBinding.ID", init), PersistenceState.NEW)); 
+		} else {
+			return (K2Entity) serviceContext.putBO(new K2EntityBO(prepareNewEntity(new K2EntityENT(), id, init), PersistenceState.NEW)); 
+		}
 	}
+
+
+	
 	@Override
 	public K2Entity getBO(K2EntityENT entity) {
 		if (entity == null ) { return nullBO(); }

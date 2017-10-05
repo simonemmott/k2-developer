@@ -4,10 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
 
 import com.k2.common.service.ServiceModel;
+import com.k2.common.meta.MetaEntity;
 import com.k2.common.service.EntityService;
 import com.k2.common.service.GenericServiceModel;
 import com.k2.dev.model.Project;
 import com.k2.dev.model.entity.ProjectENT;
+import com.k2.dev.model.meta.MetaModel;
 import com.k2.dev.service.ProjectService;
 
 @SuppressWarnings("rawtypes")
@@ -24,6 +26,9 @@ public class ProjectBO extends GenericServiceModel implements ServiceModel, Proj
     public ProjectBO(PersistenceState state) { super(state); }
     public ProjectBO(ProjectENT entity, PersistenceState state) { super(state); this.entity = entity; }
     
+	@Override
+	public MetaEntity getMetaEntity() { return MetaModel.Entities.PROJECT; }
+		
 	@Override
 	public boolean isNull() { return (this == NULL); }
 	@Override

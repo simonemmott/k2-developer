@@ -3,3 +3,7 @@
 .k2-inline>* {
 	display: inline-block;
 }
+
+.k2-list>thead>tr>th {
+	border-bottom: 1px solid black;
+}

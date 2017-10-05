@@ -7,22 +7,27 @@ import java.util.List;
 import java.util.Map;
 
 import com.k2.common.interaction.FieldHandler;
+import com.k2.common.meta.MetaEntity;
 import com.k2.common.meta.MetaField;
 import com.k2.common.meta.MetaFieldHandlers;
 import com.k2.common.meta.MetaFields;
 import com.k2.common.meta.MetaList;
 import com.k2.common.meta.MetaLists;
+import com.k2.common.meta.MetaModelEntity;
 import com.k2.common.meta.MetaListHandlers;
 import com.k2.common.meta.MetaNumberField;
 import com.k2.common.meta.MetaTextField;
 import com.k2.common.snippets.html.HtmlNumberField;
 import com.k2.common.snippets.html.HtmlTextField;
+import com.k2.common.util.LongUtil;
 import com.k2.common.util.StringUtil;
 import com.k2.dev.model.Component;
+import com.k2.dev.model.meta.MetaModel;
+import com.k2.dev.model.meta.MetaModel.Entities;
 
 @SuppressWarnings({"unused"})
 public class MetaComponent {
-	
+
 	public static class Fields extends MetaFields {
 		public static MetaField<Component, Long> ID = new MetaNumberField<Component, Long>(
 				Long.class, // Data type
@@ -83,7 +88,7 @@ public class MetaComponent {
 			return orderedFields;
 		}
 		@SuppressWarnings("rawtypes")
-		public static MetaField getMetaField(String alias) { return fields.get(alias); }
+		public static MetaField getMetaField(String alias) { getFields(); return fields.get(alias); }
 	}
 	
 	public static class FieldHandlers extends MetaFieldHandlers {
@@ -93,6 +98,7 @@ public class MetaComponent {
 			@Override public Long get() { return entity.getID(); }
 			@Override public void set(Long value) { entity.setID(value); }
 			@Override public void setFromUI(String value) { set(StringUtil.toLong(value)); }
+			@Override public String getForUI() { return LongUtil.toString(get()); }
 		}
 		
 		public static class NAME extends FieldHandler<Component, String> {
@@ -100,6 +106,7 @@ public class MetaComponent {
 			@Override public String get() { return entity.getName(); }
 			@Override public void set(String value) { entity.setName(value); }
 			@Override public void setFromUI(String value) { set(value); }
+			@Override public String getForUI() { return get(); }
 		}
 		
 		public static class PACKAGE_NAME extends FieldHandler<Component, String> {
@@ -107,6 +114,7 @@ public class MetaComponent {
 			@Override public String get() { return entity.getPackageName(); }
 			@Override public void set(String value) { entity.setPackageName(value); }
 			@Override public void setFromUI(String value) { set(value); }
+			@Override public String getForUI() { return get(); }
 		}
 		
 	}
@@ -126,7 +134,7 @@ public class MetaComponent {
 			return orderedLists;
 		}
 		@SuppressWarnings("rawtypes")
-		public static MetaList getMetaField(String alias) { return lists.get(alias); }
+		public static MetaList getMetaList(String alias) { getLists(); return lists.get(alias); }
 	}
 	
 

@@ -6,15 +6,20 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.k2.common.meta.MetaEntity;
 import com.k2.common.service.EntityInitialValues;
 import com.k2.common.service.GenericEntityService;
 import com.k2.common.service.GenericServiceList;
 import com.k2.common.service.ServiceList;
 import com.k2.common.service.GenericServiceModel.PersistenceState;
 import com.k2.dev.dao.DependencyDAO;
+import com.k2.dev.model.Component;
 import com.k2.dev.model.Dependency;
+import com.k2.dev.model.bo.ComponentBO;
 import com.k2.dev.model.bo.DependencyBO;
+import com.k2.dev.model.entity.ComponentENT;
 import com.k2.dev.model.entity.DependencyENT;
+import com.k2.dev.model.meta.MetaModel;
 import com.k2.dev.service.DependencyService;
 
 @Service("dependencyService")
@@ -27,11 +32,13 @@ public class DependencyServiceImpl extends GenericEntityService<DependencyENT, L
 			protected DependencyDAO dao;
 			protected DependencyService service;
 			public DependencyServiceList(DependencyService service, DependencyDAO dao) { this.service = service; this.dao = dao; }
+			@Override public MetaEntity getMetaEntity() { return MetaModel.Entities.DEPENDENCY; }
 		}
 
 		public static class All extends DependencyServiceList implements ServiceList<Dependency> {
 			public All(DependencyService service, DependencyDAO dao) { super(service, dao); }
 			@Override public Dependency newBO() { return service.newBO(); }
+			@Override public Dependency newBO(Long id) { return service.newBO(id); }
 			@Override protected List<DependencyENT> getList() { return dao.list(); }
 			@Override protected Dependency getBO(DependencyENT entity) { return service.getBO(entity); }
 		}
@@ -50,9 +57,14 @@ public class DependencyServiceImpl extends GenericEntityService<DependencyENT, L
 	public ServiceList<Dependency> listAll() { return new Lists.All(this, dao); }
 	
 	@Override
-	public Dependency newBO(EntityInitialValues<DependencyENT> init) {
-		return (Dependency) serviceContext.putBO(new DependencyBO(prepareNewEntity(new DependencyENT(), "Dependency.ID", init), PersistenceState.NEW)); 
+	public Dependency newBO(Long id, EntityInitialValues<DependencyENT> init) { 
+		if (id == null) {
+			return (Dependency) serviceContext.putBO(new DependencyBO(prepareNewEntity(new DependencyENT(), "Component.ID", init), PersistenceState.NEW)); 
+		} else {
+			return (Dependency) serviceContext.putBO(new DependencyBO(prepareNewEntity(new DependencyENT(), id, init), PersistenceState.NEW)); 
+		}
 	}
+
 	@Override
 	public Dependency getBO(DependencyENT entity) {
 		if (entity == null ) { return nullBO(); }

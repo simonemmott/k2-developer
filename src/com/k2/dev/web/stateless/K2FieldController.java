@@ -28,11 +28,14 @@ import com.k2.common.service.ServiceModel;
 import com.k2.common.web.AbstractStatelessEntityController;
 import com.k2.common.writeEvents.ValidationException;
 import com.k2.dev.model.K2Entity;
+import com.k2.dev.model.K2Field;
 import com.k2.dev.model.meta.component.MetaK2Entity;
+import com.k2.dev.model.meta.component.MetaK2Field;
 import com.k2.dev.service.K2EntityService;
+import com.k2.dev.service.K2FieldService;
 
 @Controller
-public class K2EntityController extends AbstractStatelessEntityController<K2Entity> {
+public class K2FieldController extends AbstractStatelessEntityController<K2Field> {
 	
 	@PersistenceUnit
 	EntityManagerFactory emf;
@@ -41,30 +44,30 @@ public class K2EntityController extends AbstractStatelessEntityController<K2Enti
 	CurrentConversation currentConversation;
 	
 	@Autowired
-	private K2EntityService service;
+	private K2FieldService service;
 	
 	@Autowired
-	public K2EntityController(OutputFormatterContextFactory formatterContextFactory, ApplicationContext snippetContext) {
+	public K2FieldController(OutputFormatterContextFactory formatterContextFactory, ApplicationContext snippetContext) {
 		super(formatterContextFactory, snippetContext);
 	}
 
 	@SuppressWarnings("rawtypes")
 	@Override
-	protected List<MetaField> getMetaFields() { return MetaK2Entity.Fields.getFields(); }
+	protected List<MetaField> getMetaFields() { return MetaK2Field.Fields.getFields(); }
 	
 	@Override
 	@SuppressWarnings("rawtypes")
-	protected MetaField getMetaField(String parmName) { return  MetaK2Entity.Fields.getMetaField(parmName); }
+	protected MetaField getMetaField(String parmName) { return  MetaK2Field.Fields.getMetaField(parmName); }
 	
 	@Override
 	@SuppressWarnings("rawtypes")
-	protected MetaList getMetaList(String listAlias) { return  MetaK2Entity.Lists.getMetaList(listAlias); }
+	protected MetaList getMetaList(String listAlias) { return  MetaK2Field.Lists.getMetaList(listAlias); }
 	
 	@SuppressWarnings("rawtypes")
 	@Override
-	protected List<MetaList> getMetaLists() { return MetaK2Entity.Lists.getLists(); }
+	protected List<MetaList> getMetaLists() { return MetaK2Field.Lists.getLists(); }
 	
-	@RequestMapping(value="/entities/k2Entity", method=RequestMethod.GET)
+	@RequestMapping(value="/entities/k2Field", method=RequestMethod.GET)
 	public String getEntityList(
 			RedirectAttributes model,
 			HttpServletRequest request, 
@@ -79,7 +82,7 @@ public class K2EntityController extends AbstractStatelessEntityController<K2Enti
 		
 			List<Message> messages = getMessages(model);
 		
-			presentEntityList(service.listAll(), MetaK2Entity.defaultFieldSet, messages, request, response);
+			presentEntityList(service.listAll(), MetaK2Field.defaultFieldSet, messages, request, response);
 
 		} finally {
 			conversation.end();
@@ -88,7 +91,7 @@ public class K2EntityController extends AbstractStatelessEntityController<K2Enti
 		return null;
 	}
 	
-	@RequestMapping(value="/entities/k2Entity/{id}", method=RequestMethod.POST)
+	@RequestMapping(value="/entities/k2Field/{id}", method=RequestMethod.POST)
 	public void postEntity(
 			@RequestParam(value="k2-action", required=false) String k2Action, 
 			@RequestParam(value="k2-from", required=false) String k2From, 
@@ -105,7 +108,7 @@ public class K2EntityController extends AbstractStatelessEntityController<K2Enti
 		try {
 			List<Message> messages = getMessages(model);
 
-			K2Entity entity = service.fetch(id);
+			K2Field entity = service.fetch(id);
 			if (notFound(id, entity, response)) { return; }
 			
 			if (k2Action != null) {
@@ -132,7 +135,7 @@ public class K2EntityController extends AbstractStatelessEntityController<K2Enti
 		}
 	}
 	
-	@RequestMapping(value="/entities/k2Entity/{id}", method=RequestMethod.GET)
+	@RequestMapping(value="/entities/k2Field/{id}", method=RequestMethod.GET)
 	public void getEntity(
 			@PathVariable("id") Long id, 
 			RedirectAttributes model,
@@ -147,7 +150,7 @@ public class K2EntityController extends AbstractStatelessEntityController<K2Enti
 
 			List<Message> messages = getMessages(model);
 
-			K2Entity entity = service.fetch(id);
+			K2Field entity = service.fetch(id);
 			if (notFound(id, entity, response)) { return; }
 			
 			presentEntity(entity, messages, request, response);
@@ -158,7 +161,7 @@ public class K2EntityController extends AbstractStatelessEntityController<K2Enti
 		return;
 	}
 	
-	@RequestMapping(value="/entities/k2Entity/new", method=RequestMethod.POST)
+	@RequestMapping(value="/entities/k2Field/new", method=RequestMethod.POST)
 	public void postNewEntity(
 			@RequestParam(value="k2-from", required=false) String k2From, 
 			RedirectAttributes model,
@@ -174,7 +177,7 @@ public class K2EntityController extends AbstractStatelessEntityController<K2Enti
 			List<Message> messages = getMessages(model);
 			Long entityID = (Long) model.getFlashAttributes().get(FLASH_ATTR_ENTITY_ID);
 
-			K2Entity entity = service.listAll().newBO(entityID);
+			K2Field entity = service.listAll().newBO(entityID);
 			
 			updateEntity(entity, messages, request);
 			
@@ -186,7 +189,7 @@ public class K2EntityController extends AbstractStatelessEntityController<K2Enti
 		return;
 	}
 	
-	@RequestMapping(value="/entities/k2Entity/new", method=RequestMethod.GET)
+	@RequestMapping(value="/entities/k2Field/new", method=RequestMethod.GET)
 	public void getNewEntity(
 			RedirectAttributes model,
 			HttpServletRequest request, 
@@ -200,7 +203,7 @@ public class K2EntityController extends AbstractStatelessEntityController<K2Enti
 
 			List<Message> messages = getMessages(model);
 
-			K2Entity entity = service.listAll().newBO();
+			K2Field entity = service.listAll().newBO();
 			
 			model.addFlashAttribute(FLASH_ATTR_ENTITY_ID, entity.getID());
 			
@@ -213,7 +216,7 @@ public class K2EntityController extends AbstractStatelessEntityController<K2Enti
 	}
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	@RequestMapping(value="/entities/k2Entity/{id}/list/{listAlias}", method=RequestMethod.GET)
+	@RequestMapping(value="/entities/k2Field/{id}/list/{listAlias}", method=RequestMethod.GET)
 	public void getListFromEntity(
 			@PathVariable("id") Long id, 
 			@PathVariable("listAlias") String listAlias,
@@ -229,7 +232,7 @@ public class K2EntityController extends AbstractStatelessEntityController<K2Enti
 		
 			List<Message> messages = getMessages(model);
 
-			K2Entity entity = service.fetch(id);
+			K2Field entity = service.fetch(id);
 			if (notFound(id, entity, response)) { return; }
 			
 			MetaList metaList = MetaK2Entity.Lists.getMetaList(listAlias);
@@ -244,7 +247,7 @@ public class K2EntityController extends AbstractStatelessEntityController<K2Enti
 	}
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	@RequestMapping(value="/entities/k2Entity/{id}/list/{listAlias}/new", method=RequestMethod.POST)
+	@RequestMapping(value="/entities/k2Field/{id}/list/{listAlias}/new", method=RequestMethod.POST)
 	public void postNewEntityInList(
 			@RequestParam(value="k2-from", required=false) String k2From, 
 			@PathVariable("id") Long id, 
@@ -265,7 +268,7 @@ public class K2EntityController extends AbstractStatelessEntityController<K2Enti
 						
 			Long entityID = (Long) model.getFlashAttributes().get(FLASH_ATTR_ENTITY_ID);
 			
-			K2Entity entity = service.fetch(id);
+			K2Field entity = service.fetch(id);
 			if (notFound(id, entity, response)) { return; }
 
 			ServiceModel newEntity = (ServiceModel) metaList.getHandler(entity).getServiceList().newBO(entityID);
@@ -283,7 +286,7 @@ public class K2EntityController extends AbstractStatelessEntityController<K2Enti
 	}
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	@RequestMapping(value="/entities/k2Entity/{id}/list/{listAlias}/new", method=RequestMethod.GET)
+	@RequestMapping(value="/entities/k2Field/{id}/list/{listAlias}/new", method=RequestMethod.GET)
 	public void getNewEntityInList(
 			@PathVariable("id") Long id, 
 			@PathVariable("listAlias") String listAlias,
@@ -299,7 +302,7 @@ public class K2EntityController extends AbstractStatelessEntityController<K2Enti
 
 			List<Message> messages = getMessages(model);
 
-			K2Entity entity = service.fetch(id);
+			K2Field entity = service.fetch(id);
 			if (notFound(id, entity, response)) { return; }
 			
 			MetaList metaList = MetaK2Entity.Lists.getMetaList(listAlias);

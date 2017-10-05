@@ -4,11 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
 
 import com.k2.common.service.ServiceModel;
+import com.k2.common.meta.MetaEntity;
 import com.k2.common.service.EntityService;
 import com.k2.common.service.GenericServiceModel;
 import com.k2.dev.model.EntityBinding;
 import com.k2.dev.model.K2Field;
 import com.k2.dev.model.entity.EntityBindingENT;
+import com.k2.dev.model.meta.MetaModel;
 import com.k2.dev.service.EntityBindingService;
 import com.k2.dev.service.K2FieldService;
 
@@ -29,6 +31,9 @@ public class EntityBindingBO extends GenericServiceModel implements ServiceModel
 	public EntityBindingBO(PersistenceState state) { super(state); }
 	public EntityBindingBO(EntityBindingENT entity, PersistenceState state) { super(state); this.entity = entity; }
 	
+	@Override
+	public MetaEntity getMetaEntity() { return MetaModel.Entities.ENTITY_BINDING; }
+		
 	@Override
 	public boolean isNull() { return (this == NULL); }
 	@Override

@@ -4,12 +4,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
 
 import com.k2.common.service.ServiceModel;
+import com.k2.common.meta.MetaEntity;
 import com.k2.common.service.EntityService;
 import com.k2.common.service.ServiceList;
 import com.k2.dev.model.Component;
 import com.k2.dev.model.K2Entity;
 import com.k2.dev.model.K2Field;
 import com.k2.dev.model.entity.K2EntityENT;
+import com.k2.dev.model.meta.MetaModel;
 import com.k2.dev.service.K2EntityService;
 import com.k2.dev.service.K2FieldService;
 
@@ -28,6 +30,9 @@ public class K2EntityBO extends ComponentBO implements ServiceModel, K2Entity, C
 	public K2EntityBO() { super(null); }
 	public K2EntityBO(K2EntityENT entity, PersistenceState state) { super(state); this.entity = entity; }
 	
+	@Override
+	public MetaEntity getMetaEntity() { return MetaModel.Entities.K2ENTITY; }
+		
 	@Override
 	public boolean isNull() { return (this == NULL); }
 	@Override

@@ -29,7 +29,7 @@ public class K2EntityHibernateDAO extends HibernateDAO<K2EntityENT, Long> implem
 		Root<K2EntityENT> root = criteria.from(K2EntityENT.class);
 		ParameterExpression<String> nameParm = builder.parameter(String.class);
 		criteria.select(root).where(builder.equal(root.get("name"), nameParm));
-		TypedQuery<K2EntityENT> query = em.createQuery(criteria);
+		TypedQuery<K2EntityENT> query = getEM().createQuery(criteria);
 		query.setParameter(nameParm, name);
 
 		try {

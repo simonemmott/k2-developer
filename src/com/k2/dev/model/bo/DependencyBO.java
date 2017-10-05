@@ -4,10 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
 
 import com.k2.common.service.ServiceModel;
+import com.k2.common.meta.MetaEntity;
 import com.k2.common.service.EntityService;
 import com.k2.common.service.GenericServiceModel;
 import com.k2.dev.model.Dependency;
 import com.k2.dev.model.entity.DependencyENT;
+import com.k2.dev.model.meta.MetaModel;
 import com.k2.dev.service.DependencyService;
 
 @SuppressWarnings("rawtypes")
@@ -24,6 +26,9 @@ public class DependencyBO extends GenericServiceModel implements ServiceModel, D
     public DependencyBO(PersistenceState state) { super(state); }
     public DependencyBO(DependencyENT entity, PersistenceState state) { super(state); this.entity = entity; }
     
+	@Override
+	public MetaEntity getMetaEntity() { return MetaModel.Entities.DEPENDENCY; }
+		
 	@Override
 	public boolean isNull() { return (this == NULL); }
 	@Override

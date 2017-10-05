@@ -4,12 +4,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
 
 import com.k2.common.service.ServiceModel;
+import com.k2.common.meta.MetaEntity;
 import com.k2.common.service.EntityService;
 import com.k2.common.service.GenericServiceModel;
 import com.k2.dev.model.K2Snippet;
 import com.k2.dev.model.K2SnippetBinding;
 import com.k2.dev.model.K2SnippetParameter;
 import com.k2.dev.model.entity.K2SnippetBindingENT;
+import com.k2.dev.model.meta.MetaModel;
 import com.k2.dev.service.K2SnippetBindingService;
 import com.k2.dev.service.K2SnippetParameterService;
 import com.k2.dev.service.K2SnippetService;
@@ -34,6 +36,9 @@ public class K2SnippetBindingBO extends GenericServiceModel implements ServiceMo
 	public K2SnippetBindingBO(PersistenceState state) { super(state); }
 	public K2SnippetBindingBO(K2SnippetBindingENT entity, PersistenceState state) { super(state); this.entity = entity; }
 	
+	@Override
+	public MetaEntity getMetaEntity() { return MetaModel.Entities.SNIPPET_BINDING; }
+		
 	@Override
 	public boolean isNull() { return (this == NULL); }
 	@Override

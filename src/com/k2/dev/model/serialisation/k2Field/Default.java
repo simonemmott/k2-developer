@@ -58,7 +58,7 @@ public class Default extends GenericSerialiserScheme<K2Field> implements Seriali
 				entity.setDataType(reader.nextString());
 				break;
 			case "columnName":
-				entity.setColumName(reader.nextString());
+				entity.setColumnName(reader.nextString());
 				break;
 			case "nullable":
 				entity.setNullable(reader.nextBoolean());

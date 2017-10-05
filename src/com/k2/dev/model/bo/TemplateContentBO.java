@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
 
 import com.k2.common.service.ServiceModel;
+import com.k2.common.meta.MetaEntity;
 import com.k2.common.service.EntityService;
 import com.k2.common.service.GenericServiceModel;
 import com.k2.common.service.ServiceList;
@@ -13,6 +14,7 @@ import com.k2.dev.model.Template;
 import com.k2.dev.model.TemplateBinding;
 import com.k2.dev.model.TemplateContent;
 import com.k2.dev.model.entity.TemplateContentENT;
+import com.k2.dev.model.meta.MetaModel;
 import com.k2.dev.service.K2PermittedContentService;
 import com.k2.dev.service.K2SnippetContainerService;
 import com.k2.dev.service.K2SnippetService;
@@ -49,6 +51,9 @@ public class TemplateContentBO extends GenericServiceModel implements ServiceMod
     public TemplateContentBO(PersistenceState state) { super(state); }
     public TemplateContentBO(TemplateContentENT entity, PersistenceState state) { super(state); this.entity = entity; }
     
+	@Override
+	public MetaEntity getMetaEntity() { return MetaModel.Entities.TEMPLATE_CONTENT; }
+		
 	@Override
 	public boolean isNull() { return (this == NULL); }
 	@Override

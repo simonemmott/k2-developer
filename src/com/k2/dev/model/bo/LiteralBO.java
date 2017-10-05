@@ -6,10 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
 
 import com.k2.common.service.ServiceModel;
+import com.k2.common.meta.MetaEntity;
 import com.k2.common.service.EntityService;
 import com.k2.common.service.GenericServiceModel;
 import com.k2.dev.model.Literal;
 import com.k2.dev.model.entity.LiteralENT;
+import com.k2.dev.model.meta.MetaModel;
 import com.k2.dev.service.LiteralService;
 
 @SuppressWarnings("rawtypes")
@@ -26,6 +28,9 @@ public class LiteralBO extends GenericServiceModel implements ServiceModel, Lite
     public LiteralBO(PersistenceState state) { super(state); }
     public LiteralBO(LiteralENT entity, PersistenceState state) { super(state); this.entity = entity; }
     
+	@Override
+	public MetaEntity getMetaEntity() { return MetaModel.Entities.LITERAL; }
+		
 	@Override
 	public boolean isNull() { return (this == NULL); }
 	@Override

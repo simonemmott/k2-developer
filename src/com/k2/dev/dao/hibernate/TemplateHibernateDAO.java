@@ -28,7 +28,7 @@ public class TemplateHibernateDAO extends HibernateDAO<TemplateENT, Long> implem
 		Root<TemplateENT> root = criteria.from(TemplateENT.class);
 		ParameterExpression<String> nameParm = builder.parameter(String.class);
 		criteria.select(root).where(builder.equal(root.get("name"), nameParm));
-		TypedQuery<TemplateENT> query = em.createQuery(criteria);
+		TypedQuery<TemplateENT> query = getEM().createQuery(criteria);
 		query.setParameter(nameParm, name);
 
 		try {

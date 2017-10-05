@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
 
 import com.k2.common.service.ServiceModel;
+import com.k2.common.meta.MetaEntity;
 import com.k2.common.service.EntityService;
 import com.k2.dev.model.K2Snippet;
 import com.k2.dev.model.K2SnippetParameter;
@@ -11,6 +12,7 @@ import com.k2.dev.model.Literal;
 import com.k2.dev.model.Template;
 import com.k2.dev.model.TemplateBinding;
 import com.k2.dev.model.entity.TemplateBindingENT;
+import com.k2.dev.model.meta.MetaModel;
 import com.k2.dev.service.K2SnippetParameterService;
 import com.k2.dev.service.K2SnippetService;
 import com.k2.dev.service.LiteralService;
@@ -43,6 +45,9 @@ public class TemplateBindingBO extends K2SnippetBindingBO implements ServiceMode
     public TemplateBindingBO(PersistenceState state) { super(state); }
     public TemplateBindingBO(TemplateBindingENT entity, PersistenceState state) { super(state); this.entity = entity; }
     
+	@Override
+	public MetaEntity getMetaEntity() { return MetaModel.Entities.TEMPLATE_BINDING; }
+		
 	@Override
 	public boolean isNull() { return (this == NULL); }
 	@Override

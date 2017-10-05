@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.k2.common.meta.MetaEntity;
 import com.k2.common.service.EntityInitialValues;
 import com.k2.common.service.GenericEntityService;
 import com.k2.common.service.GenericServiceList;
@@ -16,6 +17,7 @@ import com.k2.dev.model.Component;
 import com.k2.dev.model.bo.ComponentBO;
 import com.k2.dev.model.entity.ComponentENT;
 import com.k2.dev.model.entity.K2SnippetENT;
+import com.k2.dev.model.meta.MetaModel;
 import com.k2.dev.model.entity.K2SnippetContainerENT;
 import com.k2.dev.service.ComponentService;
 
@@ -29,11 +31,13 @@ public class ComponentServiceImpl extends GenericEntityService<ComponentENT, Lon
 			protected ComponentDAO dao;
 			protected ComponentService service;
 			public ComponentServiceList(ComponentService service, ComponentDAO dao) { this.service = service; this.dao = dao; }
+			@Override public MetaEntity getMetaEntity() { return MetaModel.Entities.COMPONENT; }
 		}
 
 		public static class All extends ComponentServiceList implements ServiceList<Component> {
 			public All(ComponentService service, ComponentDAO dao) { super(service, dao); }
 			@Override public Component newBO() { return service.newBO(); }
+			@Override public Component newBO(Long id) { return service.newBO(id); }
 			@Override protected List<ComponentENT> getList() { return dao.list(); }
 			@Override protected Component getBO(ComponentENT entity) { return service.getBO(entity); }
 		}
@@ -68,8 +72,12 @@ public class ComponentServiceImpl extends GenericEntityService<ComponentENT, Lon
 		return (Component) serviceContext.putBO(new ComponentBO(entity, PersistenceState.PERSISTED));
 	}
 	@Override
-	public Component newBO(EntityInitialValues<ComponentENT> init) { 
-		return (Component) serviceContext.putBO(new ComponentBO(prepareNewEntity(new ComponentENT(), "Component.ID", init), PersistenceState.NEW)); 
+	public Component newBO(Long id, EntityInitialValues<ComponentENT> init) { 
+		if (id == null) {
+			return (Component) serviceContext.putBO(new ComponentBO(prepareNewEntity(new ComponentENT(), "Component.ID", init), PersistenceState.NEW)); 
+		} else {
+			return (Component) serviceContext.putBO(new ComponentBO(prepareNewEntity(new ComponentENT(), id, init), PersistenceState.NEW)); 
+		}
 	}
 
 	@Override

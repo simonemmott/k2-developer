@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.k2.common.entityOutputFormatter.outputFormatterContext.OutputFormatterContext;
 import com.k2.common.entityOutputFormatter.outputFormatterContext.OutputFormatterContextFactory;
+import com.k2.common.meta.MetaEntity;
 import com.k2.common.snippets.SnippetFactory;
 import com.k2.common.snippets.html.HtmlPage;
 import com.k2.common.snippets.html.HtmlButton;
@@ -54,17 +55,17 @@ public class EntitiesController {
 			page.addToBody(title);
 		}
 		
-		for (MetaModel.Entities entity : MetaModel.Entities.values()) {
+		for (MetaEntity entity : MetaModel.getEntities()) {
 			HtmlInline<PrintWriter> inline = context.getSnippet(HtmlInline.class);
 			{
 				HtmlLabel<PrintWriter> entityLabel = context.getSnippet(HtmlLabel.class);
-				entityLabel.setLabel(entity.getName());
+				entityLabel.setLabel(entity.name);
 				inline.addToBody(entityLabel);
 			}
 			{
 				HtmlButton<PrintWriter> button = context.getSnippet(HtmlButton.class);
 				button.setLabel("Show");
-				button.setAction("entities/"+entity.getAlias());
+				button.setAction("entities/"+entity.alias);
 				inline.addToBody(button);
 			}
 			page.addToBody(inline);
