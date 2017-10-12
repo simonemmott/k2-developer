@@ -9,6 +9,7 @@ import java.util.Map;
 import com.k2.common.fieldSet.FieldSet;
 import com.k2.common.interaction.FieldHandler;
 import com.k2.common.interaction.ListHandler;
+import com.k2.common.interaction.MethodHandler;
 import com.k2.common.meta.MetaBooleanField;
 import com.k2.common.meta.MetaEntity;
 import com.k2.common.meta.MetaField;
@@ -17,6 +18,9 @@ import com.k2.common.meta.MetaFields;
 import com.k2.common.meta.MetaLinkedField;
 import com.k2.common.meta.MetaList;
 import com.k2.common.meta.MetaLists;
+import com.k2.common.meta.MetaMethod;
+import com.k2.common.meta.MetaMethodHandlers;
+import com.k2.common.meta.MetaMethods;
 import com.k2.common.meta.MetaListHandlers;
 import com.k2.common.meta.MetaNumberField;
 import com.k2.common.meta.MetaTextField;
@@ -36,6 +40,8 @@ import com.k2.dev.model.meta.component.MetaK2Entity.FieldHandlers;
 import com.k2.dev.model.meta.component.MetaK2Entity.Fields;
 import com.k2.dev.model.meta.component.MetaK2Entity.ListHandlers;
 import com.k2.dev.model.meta.component.MetaK2Entity.Lists;
+import com.k2.dev.model.meta.component.MetaK2Entity.MethodHandlers;
+import com.k2.dev.model.meta.component.MetaK2Entity.Methods;
 import com.k2.dev.service.K2EntityService;
 import com.k2.dev.web.stateless.K2EntityController;
 
@@ -269,6 +275,31 @@ public class MetaK2Field {
 		}
 		
 
+	}
+
+	public static class Methods extends MetaMethods {
+		@SuppressWarnings("rawtypes")
+		private static Map<String, MetaMethod> methods; 
+		@SuppressWarnings("rawtypes")
+		private static List<MetaMethod> orderedMethods;
+		@SuppressWarnings("rawtypes")
+		public static List<MetaMethod> getMethods() {
+			if (methods == null) {
+				methods =  new HashMap<String, MetaMethod>();
+				orderedMethods = new ArrayList<MetaMethod>();
+				for (MetaMethod metaMethod : MetaComponent.Methods.getMethods()) {
+					methods.put(metaMethod.alias, metaMethod); orderedMethods.add(metaMethod);
+				}
+			}
+			return orderedMethods;
+		}
+		@SuppressWarnings("rawtypes")
+		public static MetaMethod getMetaMethod(String alias) { getMethods(); return methods.get(alias); }
+
+	}
+	
+	public static class MethodHandlers extends MetaMethodHandlers {
+		
 	}
 
 

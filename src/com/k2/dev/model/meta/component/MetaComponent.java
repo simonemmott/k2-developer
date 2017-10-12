@@ -13,6 +13,9 @@ import com.k2.common.meta.MetaFieldHandlers;
 import com.k2.common.meta.MetaFields;
 import com.k2.common.meta.MetaList;
 import com.k2.common.meta.MetaLists;
+import com.k2.common.meta.MetaMethod;
+import com.k2.common.meta.MetaMethodHandlers;
+import com.k2.common.meta.MetaMethods;
 import com.k2.common.meta.MetaModelEntity;
 import com.k2.common.meta.MetaListHandlers;
 import com.k2.common.meta.MetaNumberField;
@@ -139,6 +142,28 @@ public class MetaComponent {
 	
 
 	public static class ListHandlers extends MetaListHandlers {
+		
+	}
+
+	public static class Methods extends MetaMethods {
+		@SuppressWarnings("rawtypes")
+		private static Map<String, MetaMethod> methods;
+		@SuppressWarnings("rawtypes")
+		private static List<MetaMethod> orderedMethods;
+		@SuppressWarnings("rawtypes")
+		public static List<MetaMethod> getMethods() {
+			if (methods == null) {
+				methods =  new HashMap<String, MetaMethod>();
+				orderedMethods = new ArrayList<MetaMethod>();
+			}
+			return orderedMethods;
+		}
+		@SuppressWarnings("rawtypes")
+		public static MetaMethod getMetaMethod(String alias) { getMethods(); return methods.get(alias); }
+	}
+	
+
+	public static class MethodHandlers extends MetaMethodHandlers {
 		
 	}
 

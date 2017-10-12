@@ -24,6 +24,7 @@ import com.k2.common.interaction.Message;
 import com.k2.common.interaction.RequestConversation;
 import com.k2.common.meta.MetaField;
 import com.k2.common.meta.MetaList;
+import com.k2.common.meta.MetaMethod;
 import com.k2.common.service.ServiceModel;
 import com.k2.common.web.AbstractStatelessEntityController;
 import com.k2.common.writeEvents.ValidationException;
@@ -66,6 +67,14 @@ public class K2FieldController extends AbstractStatelessEntityController<K2Field
 	@SuppressWarnings("rawtypes")
 	@Override
 	protected List<MetaList> getMetaLists() { return MetaK2Field.Lists.getLists(); }
+	
+	@SuppressWarnings("rawtypes")
+	@Override
+	protected MetaMethod getMetaMethod(String methodAlias) { return MetaK2Field.Methods.getMetaMethod(methodAlias); }
+
+	@SuppressWarnings("rawtypes")
+	@Override
+	protected List<MetaMethod> getMetaMethods() { return MetaK2Field.Methods.getMethods(); }
 	
 	@RequestMapping(value="/entities/k2Field", method=RequestMethod.GET)
 	public String getEntityList(

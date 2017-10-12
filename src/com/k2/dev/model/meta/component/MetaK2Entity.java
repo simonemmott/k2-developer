@@ -9,11 +9,16 @@ import java.util.Map;
 import com.k2.common.fieldSet.FieldSet;
 import com.k2.common.interaction.FieldHandler;
 import com.k2.common.interaction.ListHandler;
+import com.k2.common.interaction.MethodHandler;
 import com.k2.common.meta.MetaField;
 import com.k2.common.meta.MetaFieldHandlers;
 import com.k2.common.meta.MetaLinkedField;
 import com.k2.common.meta.MetaList;
 import com.k2.common.meta.MetaListHandlers;
+import com.k2.common.meta.MetaMethod;
+import com.k2.common.meta.MetaMethodHandlers;
+import com.k2.common.meta.MetaMethodParameter;
+import com.k2.common.meta.MetaMethodParameters;
 import com.k2.common.meta.MetaTextField;
 import com.k2.common.service.ServiceList;
 import com.k2.common.snippets.html.HtmlLinkedField;
@@ -21,10 +26,12 @@ import com.k2.common.snippets.html.HtmlTextField;
 import com.k2.common.util.StringUtil;
 import com.k2.dev.model.K2Entity;
 import com.k2.dev.model.K2Field;
+import com.k2.dev.model.Project;
 import com.k2.dev.model.meta.MetaModel;
 import com.k2.dev.model.meta.MetaModel.Entities;
 import com.k2.dev.model.meta.component.MetaComponent.FieldHandlers;
 import com.k2.dev.service.K2EntityService;
+import com.k2.dev.service.K2FieldService;
 import com.k2.dev.web.stateless.K2EntityController;
 import com.k2.dev.web.stateless.K2FieldController;
 
@@ -211,5 +218,73 @@ public class MetaK2Entity extends MetaComponent {
 		}
 		
 	}
+	
+	public static class Methods extends MetaComponent.Methods {
+		public static MetaMethod<K2Entity> TEST = new MetaMethod<K2Entity>(
+				"test", // Alias
+				"Test", // Default label
+				"This is a method for testing only!", // Method description
+				MethodHandlers.TEST.class, // Method handler class
+				new MetaMethodParameters(
+						new MetaMethodParameter(
+								"test", // Parameter alias
+								"Test", // Parameter name
+								String.class, // Data type class
+								HtmlTextField.class // Parameter field snippet class
+								),
+						new MetaMethodParameter(
+								"field", // Parameter alias
+								"Field", // Parameter name
+								Project.class, // Data type class
+								HtmlLinkedField.class, // Parameter field snippet class
+								ListHandlers.FIELDS.class, // List handler class
+								K2FieldService.class // Service class
+								)
+						) // Meta method parameters
+				);
+
+		@SuppressWarnings("rawtypes")
+		private static Map<String, MetaMethod> methods; 
+		@SuppressWarnings("rawtypes")
+		private static List<MetaMethod> orderedMethods;
+		@SuppressWarnings("rawtypes")
+		public static List<MetaMethod> getMethods() {
+			if (methods == null) {
+				methods =  new HashMap<String, MetaMethod>();
+				orderedMethods = new ArrayList<MetaMethod>();
+				for (MetaMethod metaMethod : MetaComponent.Methods.getMethods()) {
+					methods.put(metaMethod.alias, metaMethod); orderedMethods.add(metaMethod);
+				}
+				methods.put(TEST.alias, TEST); orderedMethods.add(TEST);
+			}
+			return orderedMethods;
+		}
+		@SuppressWarnings("rawtypes")
+		public static MetaMethod getMetaMethod(String alias) { getMethods(); return methods.get(alias); }
+
+	}
+	
+	public static class MethodHandlers extends MetaMethodHandlers {
+		
+		public static class TEST extends MethodHandler<K2Entity> {
+			public TEST() { super(Methods.TEST); }
+			@SuppressWarnings("rawtypes")
+			@Override
+			public void execute(Object ... args) {
+				if ((args.length > 0)&&(Map.class.isAssignableFrom(args[0].getClass()))) {
+					Map methodParms = (Map)args[0];
+					entity.test((String)methodParms.get("test"), (K2Field)methodParms.get("field"));
+				} else {
+					String test = "Not set"; if (args.length > 0) { test = (String)args[0]; }
+					K2Field field = null; if (args.length > 1) { field = (K2Field)args[1]; }
+					entity.test(test, field); 
+				}
+			}
+		}
+		
+	}
+	
+
+
 
 }

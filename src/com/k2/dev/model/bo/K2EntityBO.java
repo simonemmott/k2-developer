@@ -84,6 +84,10 @@ public class K2EntityBO extends ComponentBO implements ServiceModel, K2Entity, C
 
 	@Override
 	public ServiceList<K2Entity> getExtendableEntities() { return service.listAll(); }
+	@Override
+	public void test(String test, K2Field field) {
+		System.out.println("In test with: "+getIdentity()+" and message: "+test+" And field: "+field.getName());
+	}
 
 
 	

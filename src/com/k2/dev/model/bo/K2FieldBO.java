@@ -34,7 +34,9 @@ public class K2FieldBO extends GenericServiceModel implements ServiceModel, K2Fi
 	
 	@Override
 	public MetaEntity getMetaEntity() { return MetaModel.Entities.K2FIELD; }
-		
+
+	public String getIdentity() { return getName(); }
+
 	@Override
 	public boolean isNull() { return (this == NULL); }
 	@Override

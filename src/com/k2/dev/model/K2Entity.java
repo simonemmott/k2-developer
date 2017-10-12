@@ -35,4 +35,6 @@ public interface K2Entity  extends ServiceModel, Component {
 	
 	public ServiceList<K2Entity> getExtendableEntities();
 
+	public void test(String test, K2Field field);
+
 }

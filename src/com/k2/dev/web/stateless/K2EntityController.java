@@ -21,9 +21,12 @@ import com.k2.common.entityOutputFormatter.outputFormatterContext.OutputFormatte
 import com.k2.common.interaction.Conversation;
 import com.k2.common.interaction.CurrentConversation;
 import com.k2.common.interaction.Message;
+import com.k2.common.interaction.MethodHandler;
 import com.k2.common.interaction.RequestConversation;
 import com.k2.common.meta.MetaField;
 import com.k2.common.meta.MetaList;
+import com.k2.common.meta.MetaMethod;
+import com.k2.common.meta.MetaMethodParameter;
 import com.k2.common.service.ServiceModel;
 import com.k2.common.web.AbstractStatelessEntityController;
 import com.k2.common.writeEvents.ValidationException;
@@ -64,6 +67,16 @@ public class K2EntityController extends AbstractStatelessEntityController<K2Enti
 	@Override
 	protected List<MetaList> getMetaLists() { return MetaK2Entity.Lists.getLists(); }
 	
+	@SuppressWarnings("rawtypes")
+	@Override
+	protected MetaMethod getMetaMethod(String methodAlias) { return MetaK2Entity.Methods.getMetaMethod(methodAlias); }
+
+	@SuppressWarnings("rawtypes")
+	@Override
+	protected List<MetaMethod> getMetaMethods() { return MetaK2Entity.Methods.getMethods(); }
+	
+
+	
 	@RequestMapping(value="/entities/k2Entity", method=RequestMethod.GET)
 	public String getEntityList(
 			RedirectAttributes model,
@@ -90,8 +103,8 @@ public class K2EntityController extends AbstractStatelessEntityController<K2Enti
 	
 	@RequestMapping(value="/entities/k2Entity/{id}", method=RequestMethod.POST)
 	public void postEntity(
-			@RequestParam(value="k2-action", required=false) String k2Action, 
-			@RequestParam(value="k2-from", required=false) String k2From, 
+			@RequestParam(value="k2:action", required=false) String k2Action, 
+			@RequestParam(value="k2:from", required=false) String k2From, 
 			@PathVariable("id") Long id,
 			RedirectAttributes model,
 			HttpServletRequest request, 
@@ -108,23 +121,41 @@ public class K2EntityController extends AbstractStatelessEntityController<K2Enti
 			K2Entity entity = service.fetch(id);
 			if (notFound(id, entity, response)) { return; }
 			
+			updateEntity(entity, messages, request);
+
 			if (k2Action != null) {
-				switch(k2Action) {
-				case "ok":
-					updateEntity(entity, messages, request);
-					break;
-				case "delete":
-					try {
-						entity.delete();
-					} catch (ValidationException e) {
-						messages.add(new Message(Message.Level.WARNING, e.getMessage()));
+				
+				if (k2Action.startsWith("method:")) {
+					String methodAlias = k2Action.split(":")[1];
+					@SuppressWarnings("unchecked")
+					MetaMethod<K2Entity> metaMethod = MetaK2Entity.Methods.getMetaMethod(methodAlias);
+					if (metaMethod.methodParameters.size() == 0) {
+						MethodHandler<K2Entity> methodHandler = metaMethod.getHandler(entity);
+						methodHandler.execute();
+					} else {
+						setMessages(model, messages);
+						goGetMethodParms(metaMethod, request, response);
+						System.out.println("call to method with ("+metaMethod.methodParameters.size()+") parameters");
+						return;
 					}
-					break;
-					
+				} else {
+					switch(k2Action) {
+					case "k2:ok":
+						break;
+					case "k2:delete":
+						try {
+							entity.delete();
+						} catch (ValidationException e) {
+							messages.add(new Message(Message.Level.WARNING, e.getMessage()));
+						}
+						break;
+					}
+
 				}
+
 			}
 			
-			model.addFlashAttribute("messages", messages);
+			setMessages(model, messages);
 			goBack(k2From, request, response);
 			
 		} finally {
@@ -160,7 +191,7 @@ public class K2EntityController extends AbstractStatelessEntityController<K2Enti
 	
 	@RequestMapping(value="/entities/k2Entity/new", method=RequestMethod.POST)
 	public void postNewEntity(
-			@RequestParam(value="k2-from", required=false) String k2From, 
+			@RequestParam(value="k2:from", required=false) String k2From, 
 			RedirectAttributes model,
 			HttpServletRequest request, 
 			HttpServletResponse response) throws IOException {
@@ -317,5 +348,69 @@ public class K2EntityController extends AbstractStatelessEntityController<K2Enti
 		}
 		return;
 	}
-	
+
+	@SuppressWarnings({ "rawtypes" })
+	@RequestMapping(value="/entities/k2Entity/{id}/method/{methodAlias}", method=RequestMethod.GET)
+	public void getMethodParameters(
+			@PathVariable("id") Long id, 
+			@PathVariable("methodAlias") String methodAlias,
+			RedirectAttributes model,
+			HttpServletRequest request, 
+			HttpServletResponse response) throws IOException {
+		
+		context.setContext(request);
+		Conversation conversation = appContext.getBean(RequestConversation.class);
+		currentConversation.set(conversation.begin("new-k2Entity").readOnly());
+
+		try {
+
+			List<Message> messages = getMessages(model);
+
+			K2Entity entity = service.fetch(id);
+			if (notFound(id, entity, response)) { return; }
+			
+			MetaMethod metaMethod = MetaK2Entity.Methods.getMetaMethod(methodAlias);
+			
+			presentMethod(entity, metaMethod, messages, request, response);
+						
+		} finally {
+			conversation.end();
+		}
+		return;
+	}
+
+	@SuppressWarnings({ "rawtypes" })
+	@RequestMapping(value="/entities/k2Entity/{id}/method/{methodAlias}", method=RequestMethod.POST)
+	public void postMethodParameters(
+			@PathVariable("id") Long id, 
+			@PathVariable("methodAlias") String methodAlias,
+			RedirectAttributes model,
+			HttpServletRequest request, 
+			HttpServletResponse response) throws IOException {
+		
+		context.setContext(request);
+		Conversation conversation = appContext.getBean(RequestConversation.class);
+		currentConversation.set(conversation.begin("new-k2Entity").readOnly());
+
+		try {
+
+			List<Message> messages = getMessages(model);
+
+			K2Entity entity = service.fetch(id);
+			if (notFound(id, entity, response)) { return; }
+			
+			MetaMethod metaMethod = MetaK2Entity.Methods.getMetaMethod(methodAlias);
+			
+			setMessages(model, messages);
+			
+			executeMethod(entity, metaMethod, request, response);
+			
+			goBack(context.getContextRoot()+"/entities/k2Entity/"+id, request, response);
+						
+		} finally {
+			conversation.end();
+		}
+		return;
+	}
+
 }
