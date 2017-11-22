@@ -8,6 +8,9 @@
         <dependent-module archiveName="k2-common-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/k2-common/k2-common">
             <dependency-type>uses</dependency-type>
         </dependent-module>
+        <dependent-module archiveName="k2-core-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/k2-core/k2-core">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
         <property name="java-output-path" value="/K2_Developer/build/classes"/>
         <property name="context-root" value="k2-developer"/>
     </wb-module>

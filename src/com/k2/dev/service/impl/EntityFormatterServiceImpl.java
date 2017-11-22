@@ -6,7 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.k2.common.meta.MetaEntity;
+import com.k2.common.meta.MetaModelEntity;
 import com.k2.common.service.EntityInitialValues;
 import com.k2.common.service.GenericEntityService;
 import com.k2.common.service.GenericServiceList;
@@ -22,7 +22,7 @@ import com.k2.dev.model.entity.EntityFormatterENT;
 import com.k2.dev.model.meta.MetaModel;
 import com.k2.dev.service.EntityFormatterService;
 
-@Service("entityFormatterService")
+@Service("EntityFormatterService")
 @Transactional
 public class EntityFormatterServiceImpl extends GenericEntityService<EntityFormatterENT, Long, EntityFormatter> implements EntityFormatterService{
 
@@ -32,7 +32,7 @@ public class EntityFormatterServiceImpl extends GenericEntityService<EntityForma
 			protected EntityFormatterDAO dao;
 			protected EntityFormatterService service;
 			public EntityFormatterServiceList(EntityFormatterService service, EntityFormatterDAO dao) { this.service = service; this.dao = dao; }
-			@Override public MetaEntity getMetaEntity() { return MetaModel.Entities.ENTITY_FORMATTER; }
+			@Override public MetaModelEntity getMetaEntity() { return MetaModel.Entities.ENTITY_FORMATTER; }
 		}
 
 		public static class All extends EntityFormatterServiceList implements ServiceList<EntityFormatter> {
@@ -73,7 +73,7 @@ public class EntityFormatterServiceImpl extends GenericEntityService<EntityForma
 	public EntityFormatter getBO(EntityFormatterENT entity) {
 		if (entity == null ) { return nullBO(); }
 		if (serviceContext.getBO(entity) != null) { return (EntityFormatter) serviceContext.getBO(entity); }
-		return (EntityFormatter) serviceContext.putBO(new EntityFormatterBO(entity, PersistenceState.PERSISTED));
+		return (EntityFormatter) serviceContext.putBO(entity.getServiceModel(PersistenceState.PERSISTED));
 	}
 	@Override
 	public EntityFormatter newEntityFormatter() { return super.newBO(); }

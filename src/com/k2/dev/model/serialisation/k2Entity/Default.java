@@ -25,7 +25,7 @@ public class Default extends GenericSerialiserScheme<K2Entity> implements Serial
 		
 		writer.beginObject();
 		if ((entity != null)&&(!entity.isNull())) {
-			writer.name("id").value(entity.getID());
+			writer.name("id").value(entity.getId());
 			writer.name("packageName").value(entity.getPackageName());
 			writer.name("name").value(entity.getName());
 			writer.name("entityName").value(entity.getEntityName());
@@ -57,7 +57,7 @@ public class Default extends GenericSerialiserScheme<K2Entity> implements Serial
 				if (entity.isNull()) {
 					entity = service.getBO(new K2EntityENT());
 				}
-				entity.setID(id);
+				entity.setId(id);
 				break;
 			case "packageName":
 				entity.setPackageName(reader.nextString());

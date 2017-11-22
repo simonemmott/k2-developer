@@ -6,7 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.k2.common.meta.MetaEntity;
+import com.k2.common.meta.MetaModelEntity;
 import com.k2.common.service.EntityInitialValues;
 import com.k2.common.service.GenericEntityService;
 import com.k2.common.service.GenericServiceList;
@@ -23,7 +23,7 @@ import com.k2.dev.model.entity.EntityBindingENT;
 import com.k2.dev.model.meta.MetaModel;
 import com.k2.dev.service.EntityBindingService;
 
-@Service("entityBindingService")
+@Service("EntityBindingService")
 @Transactional
 public class EntityBindingServiceImpl extends GenericEntityService<EntityBindingENT, Long, EntityBinding> implements EntityBindingService{
 
@@ -36,7 +36,7 @@ public class EntityBindingServiceImpl extends GenericEntityService<EntityBinding
 				this.service = service; 
 				this.dao = dao; 
 			}
-			@Override public MetaEntity getMetaEntity() { return MetaModel.Entities.ENTITY_BINDING; }
+			@Override public MetaModelEntity getMetaEntity() { return MetaModel.Entities.ENTITY_BINDING; }
 		}
 
 		public static class All extends EntityBindingServiceList implements ServiceList<EntityBinding> {
@@ -78,7 +78,7 @@ public class EntityBindingServiceImpl extends GenericEntityService<EntityBinding
 	public EntityBinding getBO(EntityBindingENT entity) {
 		if (entity == null ) { return nullBO(); }
 		if (serviceContext.getBO(entity) != null) { return (EntityBinding) serviceContext.getBO(entity); }
-		return (EntityBinding) serviceContext.putBO(new EntityBindingBO(entity, PersistenceState.PERSISTED));
+		return (EntityBinding) serviceContext.putBO(entity.getServiceModel(PersistenceState.PERSISTED));
 	}
 	@Override
 	public EntityBinding newEntityBinding() { return super.newBO(); }

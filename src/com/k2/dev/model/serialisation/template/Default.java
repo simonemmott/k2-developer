@@ -27,7 +27,7 @@ public class Default extends GenericSerialiserScheme<Template> implements Serial
 		
 		writer.beginObject();
 		if ((entity != null)&&(!entity.isNull())) {
-			writer.name("id").value(entity.getID());
+			writer.name("id").value(entity.getId());
 			writer.name("name").value(entity.getName());
 			writer.name("className").value(entity.getClassName());
 			writer.name("description").value(entity.getDescription());
@@ -66,7 +66,7 @@ public class Default extends GenericSerialiserScheme<Template> implements Serial
 				if (entity.isNull()) {
 					entity = service.getBO(new TemplateENT());
 				}
-				entity.setID(id);
+				entity.setId(id);
 				break;
 			case "name":
 				entity.setName(reader.nextString());

@@ -6,7 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.k2.common.meta.MetaEntity;
+import com.k2.common.meta.MetaModelEntity;
 import com.k2.common.service.EntityInitialValues;
 import com.k2.common.service.GenericEntityService;
 import com.k2.common.service.GenericServiceList;
@@ -22,7 +22,7 @@ import com.k2.dev.model.entity.K2SnippetBindingENT;
 import com.k2.dev.model.meta.MetaModel;
 import com.k2.dev.service.K2SnippetBindingService;
 
-@Service("snippetBindingService")
+@Service("K2SnippetBindingService")
 @Transactional
 public class K2SnippetBindingServiceImpl extends GenericEntityService<K2SnippetBindingENT, Long, K2SnippetBinding> implements K2SnippetBindingService{
 
@@ -32,7 +32,7 @@ public class K2SnippetBindingServiceImpl extends GenericEntityService<K2SnippetB
 			protected K2SnippetBindingDAO dao;
 			protected K2SnippetBindingService service;
 			public K2SnippetBindingServiceList(K2SnippetBindingService service, K2SnippetBindingDAO dao) { this.service = service; this.dao = dao; }
-			@Override public MetaEntity getMetaEntity() { return MetaModel.Entities.SNIPPET_BINDING; }
+			@Override public MetaModelEntity getMetaEntity() { return MetaModel.Entities.SNIPPET_BINDING; }
 		}
 
 		public static class All extends K2SnippetBindingServiceList implements ServiceList<K2SnippetBinding> {
@@ -72,7 +72,7 @@ public class K2SnippetBindingServiceImpl extends GenericEntityService<K2SnippetB
 	public K2SnippetBinding getBO(K2SnippetBindingENT entity) {
 		if (entity == null ) { return nullBO(); }
 		if (serviceContext.getBO(entity) != null) { return (K2SnippetBinding) serviceContext.getBO(entity); }
-		return (K2SnippetBinding) serviceContext.putBO(new K2SnippetBindingBO(entity, PersistenceState.PERSISTED));
+		return (K2SnippetBinding) serviceContext.putBO(entity.getServiceModel(PersistenceState.PERSISTED));
 	}
 	@Override
 	public K2SnippetBinding newK2SnippetBinding() { return super.newBO(); }

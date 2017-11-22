@@ -6,7 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.k2.common.meta.MetaEntity;
+import com.k2.common.meta.MetaModelEntity;
 import com.k2.common.service.EntityInitialValues;
 import com.k2.common.service.GenericEntityService;
 import com.k2.common.service.GenericServiceList;
@@ -25,7 +25,7 @@ import com.k2.dev.model.entity.K2SnippetParameterENT;
 import com.k2.dev.model.meta.MetaModel;
 import com.k2.dev.service.K2SnippetParameterService;
 
-@Service("snippetParameterService")
+@Service("K2SnippetParameterService")
 @Transactional
 public class K2SnippetParameterServiceImpl extends GenericEntityService<K2SnippetParameterENT, Long, K2SnippetParameter> implements K2SnippetParameterService{
 
@@ -38,7 +38,7 @@ public class K2SnippetParameterServiceImpl extends GenericEntityService<K2Snippe
 				this.service = service; 
 				this.dao = dao; 
 			}
-			@Override public MetaEntity getMetaEntity() { return MetaModel.Entities.SNIPPET_PARAMETER; }
+			@Override public MetaModelEntity getMetaEntity() { return MetaModel.Entities.SNIPPET_PARAMETER; }
 		}
 		public static class All extends K2SnippetParameterServiceList implements ServiceList<K2SnippetParameter> {
 			public All(K2SnippetParameterService service, K2SnippetParameterDAO dao) { super(service, dao); }
@@ -117,7 +117,7 @@ public class K2SnippetParameterServiceImpl extends GenericEntityService<K2Snippe
 	public K2SnippetParameter getBO(K2SnippetParameterENT entity) {
 		if (entity == null ) { return nullBO(); }
 		if (serviceContext.getBO(entity) != null) { return (K2SnippetParameter) serviceContext.getBO(entity); }
-		return (K2SnippetParameter) serviceContext.putBO(new K2SnippetParameterBO(entity, PersistenceState.PERSISTED));
+		return (K2SnippetParameter) serviceContext.putBO(entity.getServiceModel(PersistenceState.PERSISTED));
 	}
 	@Override
 	public ServiceList<K2SnippetParameter> listForTemplate(Template template) { return new Lists.ForTemplate(this, dao, template); }

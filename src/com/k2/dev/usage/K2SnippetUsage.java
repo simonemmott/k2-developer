@@ -11,11 +11,13 @@ import com.k2.dev.model.entity.K2SnippetENT;
 import com.k2.dev.model.entity.K2SnippetContainerENT;
 import com.k2.dev.model.entity.K2SnippetParameterENT;
 
-@Component
+@Component("K2SnippetUsage")
 @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-public class SnippetUsage extends BasicEntityUsage<K2SnippetENT> implements EntityUsage<K2SnippetENT>{
+public class K2SnippetUsage extends BasicEntityUsage<K2SnippetENT> implements EntityUsage<K2SnippetENT>{
 
-	public SnippetUsage() {
+	public K2SnippetUsage() {
+		System.out.println("Creating usage details for: K2Snippet");
+
 		foreignKeys.add(new ForeignKeyDefinition<K2SnippetENT, K2SnippetParameterENT>(
 				K2SnippetENT.class, 
 				K2SnippetParameterENT.class, 

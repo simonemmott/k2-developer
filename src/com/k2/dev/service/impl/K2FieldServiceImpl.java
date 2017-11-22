@@ -6,7 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.k2.common.meta.MetaEntity;
+import com.k2.common.meta.MetaModelEntity;
 import com.k2.common.service.EntityInitialValues;
 import com.k2.common.service.GenericEntityService;
 import com.k2.common.service.GenericServiceList;
@@ -24,7 +24,7 @@ import com.k2.dev.model.entity.K2FieldENT;
 import com.k2.dev.model.meta.MetaModel;
 import com.k2.dev.service.K2FieldService;
 
-@Service("fieldService")
+@Service("K2FieldService")
 @Transactional
 public class K2FieldServiceImpl extends GenericEntityService<K2FieldENT, Long, K2Field> implements K2FieldService{
 
@@ -34,7 +34,7 @@ public class K2FieldServiceImpl extends GenericEntityService<K2FieldENT, Long, K
 			protected K2FieldDAO dao;
 			protected K2FieldService service;
 			public K2FieldServiceList(K2FieldService service, K2FieldDAO dao) { this.service = service; this.dao = dao; }
-			@Override public MetaEntity getMetaEntity() { return MetaModel.Entities.K2FIELD; }
+			@Override public MetaModelEntity getMetaEntity() { return MetaModel.Entities.K2FIELD; }
 		}
 
 		public static class All extends K2FieldServiceList implements ServiceList<K2Field> {
@@ -87,7 +87,7 @@ public class K2FieldServiceImpl extends GenericEntityService<K2FieldENT, Long, K
 	@Override
 	public K2Field newBO(Long id, EntityInitialValues<K2FieldENT> init) { 
 		if (id == null) {
-			return (K2Field) serviceContext.putBO(new K2FieldBO(prepareNewEntity(new K2FieldENT(), "EntityBinding.ID", init), PersistenceState.NEW)); 
+			return (K2Field) serviceContext.putBO(new K2FieldBO(prepareNewEntity(new K2FieldENT(), "K2Field.ID", init), PersistenceState.NEW)); 
 		} else {
 			return (K2Field) serviceContext.putBO(new K2FieldBO(prepareNewEntity(new K2FieldENT(), id, init), PersistenceState.NEW)); 
 		}
@@ -100,7 +100,7 @@ public class K2FieldServiceImpl extends GenericEntityService<K2FieldENT, Long, K
 	public K2Field getBO(K2FieldENT entity) {
 		if (entity == null ) { return nullBO(); }
 		if (serviceContext.getBO(entity) != null) { return (K2Field) serviceContext.getBO(entity); }
-		return (K2Field) serviceContext.putBO(new K2FieldBO(entity, PersistenceState.PERSISTED));
+		return (K2Field) serviceContext.putBO(entity.getServiceModel(PersistenceState.PERSISTED));
 	}
 	@Override
 	public K2Field newK2Field() { return super.newBO(); }

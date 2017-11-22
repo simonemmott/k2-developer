@@ -6,7 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.k2.common.meta.MetaEntity;
+import com.k2.common.meta.MetaModelEntity;
 import com.k2.common.service.EntityInitialValues;
 import com.k2.common.service.GenericEntityService;
 import com.k2.common.service.GenericServiceList;
@@ -22,7 +22,7 @@ import com.k2.dev.model.entity.TemplateENT;
 import com.k2.dev.model.meta.MetaModel;
 import com.k2.dev.service.TemplateService;
 
-@Service("templateService")
+@Service("TemplateService")
 @Transactional
 public class TemplateServiceImpl extends GenericEntityService<TemplateENT, Long, Template> implements TemplateService{
 
@@ -32,7 +32,7 @@ public class TemplateServiceImpl extends GenericEntityService<TemplateENT, Long,
 			protected TemplateDAO dao;
 			protected TemplateService service;
 			public TemplateServiceList(TemplateService service, TemplateDAO dao) { this.service = service; this.dao = dao; }
-			@Override public MetaEntity getMetaEntity() { return MetaModel.Entities.TEMPLATE; }
+			@Override public MetaModelEntity getMetaEntity() { return MetaModel.Entities.TEMPLATE; }
 		}
 
 		public static class All extends TemplateServiceList implements ServiceList<Template> {
@@ -70,7 +70,7 @@ public class TemplateServiceImpl extends GenericEntityService<TemplateENT, Long,
 	public Template getBO(TemplateENT entity) {
 		if (entity == null ) { return nullBO(); }
 		if (serviceContext.getBO(entity) != null) { return (Template) serviceContext.getBO(entity); }
-		return (Template) serviceContext.putBO(new TemplateBO(entity, PersistenceState.PERSISTED));
+		return (Template) serviceContext.putBO(entity.getServiceModel(PersistenceState.PERSISTED));
 	}
 	@Override
 	public Template newTemplate() { return super.newBO(); }

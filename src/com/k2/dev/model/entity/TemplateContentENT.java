@@ -1,8 +1,10 @@
 package com.k2.dev.model.entity;
 
 import javax.persistence.Column;
+import javax.persistence.ConstraintMode;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -11,10 +13,16 @@ import javax.persistence.Table;
 import com.google.common.base.Objects;
 import com.google.gson.annotations.Expose;
 import com.k2.common.identity.ID;
+import com.k2.common.service.ServiceModel;
+import com.k2.common.service.GenericServiceModel.PersistenceState;
 import com.k2.common.util.K2Type;
 import com.k2.common.util.StringUtil;
+import com.k2.dev.model.TemplateBinding;
+import com.k2.dev.model.TemplateContent;
+import com.k2.dev.model.bo.TemplateBindingBO;
+import com.k2.dev.model.bo.TemplateContentBO;
 
-@Entity
+@Entity(name="TemplateContent")
 @Table(name="TemplateContents")
 public class TemplateContentENT implements ID {
 	
@@ -49,7 +57,7 @@ public class TemplateContentENT implements ID {
         if (obj == null) return false;
         if (getClass() != obj.getClass()) return false;
         final TemplateContentENT other = (TemplateContentENT) obj;
-        return Objects.equal(this.id, other.getID());
+        return Objects.equal(this.id, other.getId());
 
     }
 
@@ -58,18 +66,20 @@ public class TemplateContentENT implements ID {
         return Objects.hashCode(this.id);
     }
         
-	
+	@SuppressWarnings("rawtypes")
+	public ServiceModel getServiceModel(PersistenceState state) { return new TemplateContentBO(this, state); }
+
 	@Id
 	@Expose(serialize=true)
 	@Column(name="Id")
 	protected Long id;
 	@Override
-	public Long getID() { return id; }
+	public Long getId() { return id; }
 	@Override
-	public void setID(Long id) { this.id = id; }
+	public void setId(Long id) { this.id = id; }
 
-	@ManyToOne(fetch=FetchType.LAZY, targetEntity=TemplateENT.class, optional=true)
-	@JoinColumn(name="TemplateID", nullable=true)
+	@ManyToOne(fetch=FetchType.LAZY, targetEntity=TemplateENT.class, optional=false)
+	@JoinColumn(name="TemplateID", nullable=false)
 	@Expose(serialize=false)
 	protected TemplateENT template;
 	public TemplateENT getTemplate(){ return template; }
@@ -115,5 +125,22 @@ public class TemplateContentENT implements ID {
 	protected K2SnippetContainerENT fromContainer;
 	public K2SnippetContainerENT getFromContainer() { return fromContainer; } 
 	public void setFromContainer(K2SnippetContainerENT container) { this.fromContainer = container; }
+	
+	@SuppressWarnings("rawtypes")
+	public void clone(ServiceModel source) {
+		if (TemplateContent.class.isAssignableFrom(source.getClass())) {
+			TemplateContent clone = (TemplateContent)source;
+			id = clone.getId();
+			template = clone.getTemplate().getEntity();
+			containedSnippet = clone.getContainedSnippet().getEntity();
+			inContainer = clone.getInContainer().getEntity();
+			alias = clone.getAlias();
+			parentContent = clone.getParentContent().getEntity();
+			type = clone.getType();
+			fromContainer = clone.getFromContainer().getEntity();
+		}
+	}
+
+
 
 }

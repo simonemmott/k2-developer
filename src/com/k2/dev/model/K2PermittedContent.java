@@ -1,10 +1,11 @@
 package com.k2.dev.model;
 
+import com.k2.common.identity.ID;
 import com.k2.common.service.ServiceModel;
 import com.k2.dev.model.entity.K2PermittedContentENT;
 
 @SuppressWarnings("rawtypes")
-public interface K2PermittedContent extends ServiceModel {
+public interface K2PermittedContent extends ServiceModel, ID {
 	
 	@Override
 	public K2PermittedContentENT getEntity();
@@ -15,9 +16,9 @@ public interface K2PermittedContent extends ServiceModel {
 	@Override
 	public K2PermittedContent Null();
 
-	public Long getID();
+	public Long getId();
 
-	public void setID(Long id);
+	public void setId(Long id);
 
 	public String getName();
 

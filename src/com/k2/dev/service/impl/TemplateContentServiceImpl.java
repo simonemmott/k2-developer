@@ -6,7 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.k2.common.meta.MetaEntity;
+import com.k2.common.meta.MetaModelEntity;
 import com.k2.common.service.EntityInitialValues;
 import com.k2.common.service.GenericEntityService;
 import com.k2.common.service.GenericServiceList;
@@ -23,7 +23,7 @@ import com.k2.dev.model.entity.TemplateContentENT;
 import com.k2.dev.model.meta.MetaModel;
 import com.k2.dev.service.TemplateContentService;
 
-@Service("templateContentService")
+@Service("TemplateContentService")
 @Transactional
 public class TemplateContentServiceImpl extends GenericEntityService<TemplateContentENT, Long, TemplateContent> implements TemplateContentService{
 
@@ -33,7 +33,7 @@ public class TemplateContentServiceImpl extends GenericEntityService<TemplateCon
 			protected TemplateContentDAO dao;
 			protected TemplateContentService service;
 			public TemplateContentServiceList(TemplateContentService service, TemplateContentDAO dao) { this.service = service; this.dao = dao; }
-			@Override public MetaEntity getMetaEntity() { return MetaModel.Entities.TEMPLATE_CONTENT; }
+			@Override public MetaModelEntity getMetaEntity() { return MetaModel.Entities.TEMPLATE_CONTENT; }
 		}
 
 		public static class All extends TemplateContentServiceList implements ServiceList<TemplateContent> {
@@ -95,7 +95,7 @@ public class TemplateContentServiceImpl extends GenericEntityService<TemplateCon
 	public TemplateContent getBO(TemplateContentENT entity) {
 		if (entity == null ) { return nullBO(); }
 		if (serviceContext.getBO(entity) != null) { return (TemplateContent) serviceContext.getBO(entity); }
-		return (TemplateContent) serviceContext.putBO(new TemplateContentBO(entity, PersistenceState.PERSISTED));
+		return (TemplateContent) serviceContext.putBO(entity.getServiceModel(PersistenceState.PERSISTED));
 	}
 	@Override
 	public ServiceList<TemplateContent> listForTemplate(Template template) { return new Lists.ForTemplate(this, dao, template); }

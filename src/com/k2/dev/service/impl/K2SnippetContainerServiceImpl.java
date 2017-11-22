@@ -6,7 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.k2.common.meta.MetaEntity;
+import com.k2.common.meta.MetaModelEntity;
 import com.k2.common.service.EntityInitialValues;
 import com.k2.common.service.GenericEntityService;
 import com.k2.common.service.GenericServiceList;
@@ -25,7 +25,7 @@ import com.k2.dev.model.entity.K2SnippetBindingENT;
 import com.k2.dev.model.entity.K2SnippetContainerENT;
 import com.k2.dev.service.K2SnippetContainerService;
 
-@Service("snippetContainerService")
+@Service("K2SnippetContainerService")
 @Transactional
 public class K2SnippetContainerServiceImpl extends GenericEntityService<K2SnippetContainerENT, Long, K2SnippetContainer> implements K2SnippetContainerService{
 	public static class Lists {
@@ -34,7 +34,7 @@ public class K2SnippetContainerServiceImpl extends GenericEntityService<K2Snippe
 			protected K2SnippetContainerDAO dao;
 			protected K2SnippetContainerService service;
 			public K2SnippetContainerServiceList(K2SnippetContainerService service, K2SnippetContainerDAO dao) { this.service = service; this.dao = dao; }
-			@Override public MetaEntity getMetaEntity() { return MetaModel.Entities.SNIPPET_CONTAINER; }
+			@Override public MetaModelEntity getMetaEntity() { return MetaModel.Entities.SNIPPET_CONTAINER; }
 		}
 
 		public static class All extends K2SnippetContainerServiceList implements ServiceList<K2SnippetContainer> {
@@ -119,7 +119,7 @@ public class K2SnippetContainerServiceImpl extends GenericEntityService<K2Snippe
 	public K2SnippetContainer getBO(K2SnippetContainerENT entity) {
 		if (entity == null ) { return nullBO(); }
 		if (serviceContext.getBO(entity) != null) { return (K2SnippetContainerBO) serviceContext.getBO(entity); }
-		return (K2SnippetContainerBO) serviceContext.putBO(new K2SnippetContainerBO(entity, PersistenceState.PERSISTED));
+		return (K2SnippetContainerBO) serviceContext.putBO(entity.getServiceModel(PersistenceState.PERSISTED));
 	}
 
 	@Override

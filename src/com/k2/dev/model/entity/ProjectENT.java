@@ -6,18 +6,28 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import com.k2.common.identity.ID;
+import com.k2.common.service.ServiceModel;
+import com.k2.common.service.GenericServiceModel.PersistenceState;
+import com.k2.dev.model.Literal;
+import com.k2.dev.model.Project;
+import com.k2.dev.model.bo.K2SnippetParameterBO;
+import com.k2.dev.model.bo.ProjectBO;
 
-@Entity
+@Entity(name="Project")
 @Table(name="Projects")
 public class ProjectENT implements ID {
+	
+	@SuppressWarnings("rawtypes")
+	public ServiceModel getServiceModel(PersistenceState state) { return new ProjectBO(this, state); }
+
 
 	@Id
 	@Column(name="ID")
 	protected Long id;
 	@Override
-	public Long getID() { return id; }
+	public Long getId() { return id; }
 	@Override
-	public void setID(Long id) { this.id = id; }
+	public void setId(Long id) { this.id = id; }
 
 	@Column(name="Name", length=100, nullable=false)
 	protected String name;
@@ -33,5 +43,18 @@ public class ProjectENT implements ID {
 	protected String fileSystemRoot;
 	public String getFileSystemRoot() { return fileSystemRoot; }
 	public void setFileSystemRoot(String fileSystemRoot) { this.fileSystemRoot = fileSystemRoot; }
+	
+	@SuppressWarnings("rawtypes")
+	public void clone(ServiceModel source) {
+		if (Project.class.isAssignableFrom(source.getClass())) {
+			Project clone = (Project)source;
+			id = clone.getId();
+			name = clone.getName();
+			description = clone.getDescription();
+			fileSystemRoot = clone.getFileSystemRoot();
+		}
+	}
+
+
 
 }

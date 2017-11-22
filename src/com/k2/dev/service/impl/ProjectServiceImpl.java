@@ -6,7 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.k2.common.meta.MetaEntity;
+import com.k2.common.meta.MetaModelEntity;
 import com.k2.common.service.EntityInitialValues;
 import com.k2.common.service.GenericEntityService;
 import com.k2.common.service.GenericServiceList;
@@ -22,7 +22,7 @@ import com.k2.dev.model.entity.ProjectENT;
 import com.k2.dev.model.meta.MetaModel;
 import com.k2.dev.service.ProjectService;
 
-@Service("projectService")
+@Service("ProjectService")
 @Transactional
 public class ProjectServiceImpl extends GenericEntityService<ProjectENT, Long, Project> implements ProjectService{
 
@@ -32,7 +32,7 @@ public class ProjectServiceImpl extends GenericEntityService<ProjectENT, Long, P
 			protected ProjectDAO dao;
 			protected ProjectService service;
 			public ProjectServiceList(ProjectService service, ProjectDAO dao) { this.service = service; this.dao = dao; }
-			@Override public MetaEntity getMetaEntity() { return MetaModel.Entities.PROJECT; }
+			@Override public MetaModelEntity getMetaEntity() { return MetaModel.Entities.PROJECT; }
 		}
 
 		public static class All extends ProjectServiceList implements ServiceList<Project> {
@@ -70,7 +70,7 @@ public class ProjectServiceImpl extends GenericEntityService<ProjectENT, Long, P
 	public Project getBO(ProjectENT entity) {
 		if (entity == null ) { return nullBO(); }
 		if (serviceContext.getBO(entity) != null) { return (Project) serviceContext.getBO(entity); }
-		return (Project) serviceContext.putBO(new ProjectBO(entity, PersistenceState.PERSISTED));
+		return (Project) serviceContext.putBO(entity.getServiceModel(PersistenceState.PERSISTED));
 	}
 	@Override
 	public Project newProject() { return super.newBO(); }

@@ -1,18 +1,19 @@
 package com.k2.dev.model;
 
 import com.k2.common.service.ServiceModel;
+import com.k2.common.identity.ID;
 import com.k2.common.service.ServiceList;
 import com.k2.dev.model.entity.TemplateContentENT;
 
 @SuppressWarnings("rawtypes")
-public interface TemplateContent extends ServiceModel {
+public interface TemplateContent extends ServiceModel, ID {
 	
 	@Override public TemplateContentENT getEntity();
 	@Override public TemplateContent Null();
 
-	public Long getID();
+	public Long getId();
 
-	public void setID(Long id);
+	public void setId(Long id);
 
 	public String getAlias();
 

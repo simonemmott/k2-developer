@@ -3,6 +3,11 @@
   <groupId>com.k2</groupId>
   <artifactId>k2-developer</artifactId>
   <version>0.0.1-SNAPSHOT</version>
+  	<properties>
+    		<hibernate.version>5.2.10.Final</hibernate.version>
+    		<springframework.version>4.3.7.RELEASE</springframework.version>
+    		<blaze-persistence.version>1.2.0-Alpha3</blaze-persistence.version>
+	</properties>
 	<build>
 		<sourceDirectory>src</sourceDirectory>
 		<plugins>
@@ -53,50 +58,62 @@
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
+			<groupId>com.k2</groupId>
+			<artifactId>k2-core</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
-			<version>4.3.7.RELEASE</version>
+			<version>${springframework.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-aop</artifactId>
-			<version>4.3.7.RELEASE</version>
+			<version>${springframework.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
-			<version>4.3.7.RELEASE</version>
+			<version>${springframework.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-web</artifactId>
-			<version>4.3.7.RELEASE</version>
+			<version>${springframework.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-instrument</artifactId>
-			<version>4.3.7.RELEASE</version>
+			<version>${springframework.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-orm</artifactId>
-			<version>4.3.7.RELEASE</version>
+			<version>${springframework.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-aspects</artifactId>
-			<version>4.3.7.RELEASE</version>
+			<version>${springframework.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-beans</artifactId>
+			<version>${springframework.version}</version>
 		</dependency>
 		<!-- Hibernate -->
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
-            <version>4.3.11.Final</version>
+            <!-- <version>4.3.11.Final</version> -->
+            <version>${hibernate.version}</version>
         </dependency>
         <dependency>
     		<groupId>org.hibernate</groupId>
     			<artifactId>hibernate-entitymanager</artifactId>
-    			<version>4.3.11.Final</version>
+    			<!-- <version>4.3.11.Final</version> -->
+            <version>${hibernate.version}</version>
 		</dependency>
 		<!-- MariaDB -->
 		<dependency>
@@ -126,6 +143,25 @@
 			<groupId>javax.servlet</groupId>
 			<artifactId>jstl</artifactId>
 			<version>1.2</version>
+		</dependency>
+		<!-- https://https://persistence.blazebit.com -->
+		<dependency>
+    			<groupId>com.blazebit</groupId>
+    			<artifactId>blaze-persistence-core-api</artifactId>
+    			<version>${blaze-persistence.version}</version>
+    			<scope>compile</scope>
+		</dependency>
+		<dependency>
+    			<groupId>com.blazebit</groupId>
+    			<artifactId>blaze-persistence-core-impl</artifactId>
+    			<version>${blaze-persistence.version}</version>
+    			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+    			<groupId>com.blazebit</groupId>
+    			<artifactId>blaze-persistence-integration-hibernate-5.2</artifactId>
+    			<version>${blaze-persistence.version}</version>
+    			<scope>runtime</scope>
 		</dependency>
 	</dependencies>
 	<packaging>war</packaging>

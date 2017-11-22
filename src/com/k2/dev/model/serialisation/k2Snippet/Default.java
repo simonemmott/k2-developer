@@ -26,7 +26,7 @@ public class Default extends GenericSerialiserScheme<K2Snippet> implements Seria
 		
 		writer.beginObject();
 		if ((entity != null)&&(!entity.isNull())) {
-			writer.name("id").value(entity.getID());
+			writer.name("id").value(entity.getId());
 			writer.name("name").value(entity.getName());
 			writer.name("className").value(entity.getClassName());
 			writer.name("description").value(entity.getDescription());
@@ -58,7 +58,7 @@ public class Default extends GenericSerialiserScheme<K2Snippet> implements Seria
 				if (entity.isNull()) {
 					entity = service.getBO(new K2SnippetENT());
 				}
-				entity.getEntity().setID(id);
+				entity.getEntity().setId(id);
 				break;
 			case "name":
 				entity.getEntity().setName(reader.nextString());

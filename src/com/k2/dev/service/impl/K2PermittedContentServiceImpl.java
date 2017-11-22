@@ -6,7 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.k2.common.meta.MetaEntity;
+import com.k2.common.meta.MetaModelEntity;
 import com.k2.common.service.EntityInitialValues;
 import com.k2.common.service.GenericEntityService;
 import com.k2.common.service.GenericServiceList;
@@ -24,7 +24,7 @@ import com.k2.dev.model.entity.K2SnippetContainerENT;
 import com.k2.dev.model.meta.MetaModel;
 import com.k2.dev.service.K2PermittedContentService;
 
-@Service("permittedContentService")
+@Service("K2PermittedContentService")
 @Transactional
 public class K2PermittedContentServiceImpl extends GenericEntityService<K2PermittedContentENT, Long, K2PermittedContent> implements K2PermittedContentService{
 
@@ -37,7 +37,7 @@ public class K2PermittedContentServiceImpl extends GenericEntityService<K2Permit
 			protected K2PermittedContentDAO dao;
 			protected K2PermittedContentService service;
 			public K2PermitedContentServiceList(K2PermittedContentService service, K2PermittedContentDAO dao) { this.service = service; this.dao = dao; }
-			@Override public MetaEntity getMetaEntity() { return MetaModel.Entities.PERMITTED_CONTENT; }
+			@Override public MetaModelEntity getMetaEntity() { return MetaModel.Entities.PERMITTED_CONTENT; }
 		}
 
 		public static class All extends K2PermitedContentServiceList implements ServiceList<K2PermittedContent> {
@@ -112,7 +112,7 @@ public class K2PermittedContentServiceImpl extends GenericEntityService<K2Permit
 	public K2PermittedContent getBO(K2PermittedContentENT entity) {
 		if (entity == null ) { return nullBO(); }
 		if (serviceContext.getBO(entity) != null) { return (K2PermittedContent) serviceContext.getBO(entity); }
-		return (K2PermittedContent) serviceContext.putBO(new K2PermittedContentBO(entity, PersistenceState.PERSISTED));
+		return (K2PermittedContent) serviceContext.putBO(entity.getServiceModel(PersistenceState.PERSISTED));
 	}
 
 	@Override

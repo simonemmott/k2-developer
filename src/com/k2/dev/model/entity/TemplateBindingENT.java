@@ -1,17 +1,25 @@
 package com.k2.dev.model.entity;
 
 import javax.persistence.Column;
+import javax.persistence.ConstraintMode;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 import com.google.gson.annotations.Expose;
+import com.k2.common.service.ServiceModel;
+import com.k2.common.service.GenericServiceModel.PersistenceState;
 import com.k2.common.util.K2Type;
+import com.k2.dev.model.Project;
+import com.k2.dev.model.TemplateBinding;
+import com.k2.dev.model.bo.K2SnippetParameterBO;
+import com.k2.dev.model.bo.TemplateBindingBO;
 
-@Entity
+@Entity(name="TemplateBinding")
 @Table(name="TemplateBindings")
 @PrimaryKeyJoinColumn(name="SnippetBindingID")
 public class TemplateBindingENT extends K2SnippetBindingENT {
@@ -41,6 +49,9 @@ public class TemplateBindingENT extends K2SnippetBindingENT {
 		}
 	}
 	
+	@SuppressWarnings("rawtypes")
+	public ServiceModel getServiceModel(PersistenceState state) { return new TemplateBindingBO(this, state); }
+	
 	@ManyToOne(fetch=FetchType.LAZY, targetEntity=K2SnippetParameterENT.class, optional=true)
 	@JoinColumn(name="BindingParameterId", nullable=true)
 	@Expose(serialize=false)
@@ -67,5 +78,19 @@ public class TemplateBindingENT extends K2SnippetBindingENT {
 	protected LiteralENT literalValue;
 	public LiteralENT getLiteral() { return literalValue; }
 	public void setLiteral(LiteralENT literalValue) { this.literalValue = literalValue; }
+	
+	@SuppressWarnings("rawtypes")
+	public void clone(ServiceModel source) {
+		super.clone(source);
+		if (TemplateBinding.class.isAssignableFrom(source.getClass())) {
+			TemplateBinding clone = (TemplateBinding)source;
+			bindingParamter = clone.getBindingParameter().getEntity();
+			bindingTemplate = clone.getBindingTemplate().getEntity();
+			bindingSource = clone.getBindingSource();
+			literalValue = clone.getLiteral().getEntity();
+		}
+	}
+
+
 
 }

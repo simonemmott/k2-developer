@@ -25,7 +25,7 @@ public class Default extends GenericSerialiserScheme<Literal> implements Seriali
 		
 		writer.beginObject();
 		if ((entity != null)&&(!entity.isNull())) {
-			writer.name("id").value(entity.getID());
+			writer.name("id").value(entity.getId());
 			writer.name("dataType").value(entity.getDataType().name());
 			writer.name("textValue").value(entity.getTextValue());
 			writer.name("booleanValue").value(entity.getBooleanValue());
@@ -49,10 +49,10 @@ public class Default extends GenericSerialiserScheme<Literal> implements Seriali
 				if (entity.isNull()) {
 					entity = service.getBO(new LiteralENT());
 				}
-				entity.setID(id);
+				entity.setId(id);
 				break;
 			case "dataType":
-				entity.setDataType(LiteralENT.Types.DataType.valueOf(reader.nextString()));
+				entity.setDataType(LiteralENT.Types.LiteralDataType.valueOf(reader.nextString()));
 				break;
 			case "textValue":
 				entity.setTextValue(reader.nextString());
@@ -61,10 +61,10 @@ public class Default extends GenericSerialiserScheme<Literal> implements Seriali
 				entity.setBooleanValue(reader.nextBoolean());
 				break;
 			case "decimalValue":
-				entity.setDecimalValue(new Float(reader.nextDouble()));
+				entity.setDecimalValue(reader.nextDouble());
 				break;
 			case "numericValue":
-				entity.setNumericValue(reader.nextInt());
+				entity.setNumericValue(reader.nextLong());
 				break;
 			case "dateValue":
 				entity.setDateValue(StringUtil.toDate(reader.nextString()));
