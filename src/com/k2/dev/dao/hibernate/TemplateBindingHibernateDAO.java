@@ -30,10 +30,13 @@ public class TemplateBindingHibernateDAO extends HibernateDAO<TemplateBindingENT
 		Root<TemplateBindingENT> root = criteria.from(TemplateBindingENT.class);
 		ParameterExpression<TemplateENT> parm = builder.parameter(TemplateENT.class);
 		criteria.select(root).where(builder.equal(root.get("snippet"), parm));
-		TypedQuery<TemplateBindingENT> query = em.createQuery(criteria);
+		TypedQuery<TemplateBindingENT> query = getEM().createQuery(criteria);
 		query.setParameter(parm, template);
 		return query.getResultList();
 	}
+
+	@Override
+	protected Class<? extends TemplateBindingENT> getDaoType() { return TemplateBindingENT.class; }
 
 
 }

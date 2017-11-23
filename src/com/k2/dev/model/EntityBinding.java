@@ -4,7 +4,7 @@ import com.k2.common.service.ServiceModel;
 import com.k2.dev.model.entity.EntityBindingENT;
 
 @SuppressWarnings("rawtypes")
-public interface EntityBinding  extends ServiceModel {
+public interface EntityBinding  extends ServiceModel, K2SnippetBinding {
 	
 	@Override
 	public EntityBindingENT getEntity();

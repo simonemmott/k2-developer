@@ -31,7 +31,7 @@ public class K2SnippetParameterHibernateDAO extends HibernateDAO<K2SnippetParame
 		Root<K2SnippetParameterENT> root = criteria.from(K2SnippetParameterENT.class);
 		ParameterExpression<K2SnippetENT> snippetParm = builder.parameter(K2SnippetENT.class);
 		criteria.select(root).where(builder.equal(root.get("snippet"), snippetParm));
-		TypedQuery<K2SnippetParameterENT> query = em.createQuery(criteria);
+		TypedQuery<K2SnippetParameterENT> query = getEM().createQuery(criteria);
 		query.setParameter(snippetParm, snippet);
 		return query.getResultList();
 	}
@@ -48,7 +48,7 @@ public class K2SnippetParameterHibernateDAO extends HibernateDAO<K2SnippetParame
 		criteria.select(root).where(builder.and(
 				builder.equal(root.get("snippet"), snippetParm),
 				builder.equal(root.get("name"), nameParm)));
-		TypedQuery<K2SnippetParameterENT> query = em.createQuery(criteria);
+		TypedQuery<K2SnippetParameterENT> query = getEM().createQuery(criteria);
 		query.setParameter(snippetParm, snippet);
 		query.setParameter(nameParm, name);
 
@@ -59,5 +59,8 @@ public class K2SnippetParameterHibernateDAO extends HibernateDAO<K2SnippetParame
 		}
 
 	}
+
+	@Override
+	protected Class<? extends K2SnippetParameterENT> getDaoType() { return K2SnippetParameterENT.class; }
 
 }

@@ -23,7 +23,7 @@ public class Default  extends GenericSerialiserScheme<K2SnippetParameter> implem
 		
 		writer.beginObject();
 		if ((entity != null)&&(!entity.isNull())) {
-			writer.name("id").value(entity.getID());
+			writer.name("id").value(entity.getId());
 			writer.name("name").value(entity.getName());
 			writer.name("description").value(entity.getDescription());
 		
@@ -44,7 +44,7 @@ public class Default  extends GenericSerialiserScheme<K2SnippetParameter> implem
 				if (entity.isNull()) {
 					entity = service.getBO(new K2SnippetParameterENT());
 				}
-				entity.setID(id);
+				entity.setId(id);
 				break;
 			case "name":
 				entity.setName(reader.nextString());

@@ -1,38 +1,73 @@
 package com.k2.dev.model;
 
+import com.k2.common.identity.ID;
+import com.k2.common.service.ServiceList;
 import com.k2.common.service.ServiceModel;
 import com.k2.dev.model.entity.K2FieldENT;
+import com.k2.dev.model.entity.K2FieldENT.Types;
 
 @SuppressWarnings("rawtypes")
-public interface K2Field  extends ServiceModel {
+public interface K2Field  extends ServiceModel, ID {
 	
+	// Service methods --------
 	@Override
 	public K2FieldENT getEntity();
-
 	@Override
 	public boolean isNull();
-
 	@Override
 	public K2Field Null();
 
-	public Long getID();
+	// Fields ---------
+	// ID field
+	public Long getId();
+	public void setId(Long id);
 
-	public void setID(Long id);
+	// Alias field
+	public String getAlias();
+	public void setAlias(String alias);
 
+	// Name field
 	public String getName();
-
 	public void setName(String name);
+	
+	// K2Entity field
+	public K2Entity getK2Entity();
+	public void setK2Entity(K2Entity k2Entity);
 
+	// ColumnLength field
 	public Integer getColumnLength();
 	public void setColumnLength(Integer length);
 
-	public String getDataType();
-	public void setDataType(String dataType);
-
+	// ColumnName field
 	public String getColumnName();
-	public void setColumName(String columnName);
+	public void setColumnName(String columnName);
 
+	// Nullable field
 	public Boolean getNullable();
 	public void setNullable(Boolean nullable);
+	
+	// FieldType discriminator field
+	public Types.FieldType getFieldType();
+
+	// Lists ---------
+	// Entities list
+	public ServiceList<K2Entity> getEntities();
+
+	// Expressions ----------
+	// IsLinked expression
+	public Boolean getIsLinked();
+	
+	// InitialUpperAlias
+	public String getInitialUpperAlias();
+	
+	// DataType
+	public String getDataType();
+	
+	// CanonicalDataType
+	public String getCanonicalDataType();
+	
+	// IsDiscriminator
+	public Boolean getIsDiscriminator();
+
 
 }

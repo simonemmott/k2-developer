@@ -20,11 +20,17 @@ import com.google.gson.GsonBuilder;
 @EnableSpringConfigured
 @EnableAspectJAutoProxy
 @EnableLoadTimeWeaving(aspectjWeaving=EnableLoadTimeWeaving.AspectJWeaving.ENABLED)
-@ComponentScan({"com.k2.common, com.k2.core, com.k2.dev"})
-@PropertySource("file:${K2_HOME}/conf/k2.properties")
+@ComponentScan({
+		"com.k2.common, "
+		+ "com.k2.core, "
+		+ "com.k2.dev.dao, "
+		+ "com.k2.dev.configuration, "
+		+ "com.k2.dev.model, "
+		+ "com.k2.dev.service, "
+		+ "com.k2.dev.snippets, "
+		+ "com.k2.dev.usage"
+		})
 public class AppConfig {
-	
-	// This is an comment
 	
 	@SuppressWarnings("unused")
 	@Autowired

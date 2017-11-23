@@ -31,7 +31,7 @@ public class K2PermittedContentHibernateDAO extends HibernateDAO<K2PermittedCont
 		Root<K2PermittedContentENT> root = criteria.from(K2PermittedContentENT.class);
 		ParameterExpression<K2SnippetContainerENT> parm = builder.parameter(K2SnippetContainerENT.class);
 		criteria.select(root).where(builder.equal(root.get("container"), parm));
-		TypedQuery<K2PermittedContentENT> query = em.createQuery(criteria);
+		TypedQuery<K2PermittedContentENT> query = getEM().createQuery(criteria);
 		query.setParameter(parm, snippetContainer);
 		return query.getResultList();
 	}
@@ -48,7 +48,7 @@ public class K2PermittedContentHibernateDAO extends HibernateDAO<K2PermittedCont
 		criteria.select(root).where(builder.and(
 				builder.equal(root.get("container"), snippetContainerParm),
 				builder.equal(root.get("name"), nameParm)));
-		TypedQuery<K2PermittedContentENT> query = em.createQuery(criteria);
+		TypedQuery<K2PermittedContentENT> query = getEM().createQuery(criteria);
 		query.setParameter(snippetContainerParm, snippetContainer);
 		query.setParameter(nameParm, name);
 
@@ -58,5 +58,8 @@ public class K2PermittedContentHibernateDAO extends HibernateDAO<K2PermittedCont
 			return null;
 		}
 	}
+
+	@Override
+	protected Class<? extends K2PermittedContentENT> getDaoType() { return K2PermittedContentENT.class; }
 
 }

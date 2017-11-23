@@ -28,7 +28,7 @@ public class ProjectHibernateDAO extends HibernateDAO<ProjectENT, Long> implemen
 		Root<ProjectENT> root = criteria.from(ProjectENT.class);
 		ParameterExpression<String> nameParm = builder.parameter(String.class);
 		criteria.select(root).where(builder.equal(root.get("name"), nameParm));
-		TypedQuery<ProjectENT> query = em.createQuery(criteria);
+		TypedQuery<ProjectENT> query = getEM().createQuery(criteria);
 		query.setParameter(nameParm, name);
 
 		try {
@@ -37,5 +37,8 @@ public class ProjectHibernateDAO extends HibernateDAO<ProjectENT, Long> implemen
 			return null;
 		}
 	}
+
+	@Override
+	protected Class<? extends ProjectENT> getDaoType() { return ProjectENT.class; }
 
 }

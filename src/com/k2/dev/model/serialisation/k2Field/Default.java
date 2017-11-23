@@ -23,10 +23,9 @@ public class Default extends GenericSerialiserScheme<K2Field> implements Seriali
 		
 		writer.beginObject();
 		if ((entity != null)&&(!entity.isNull())) {
-			writer.name("id").value(entity.getID());
+			writer.name("id").value(entity.getId());
 			writer.name("name").value(entity.getName());
 			writer.name("columnLength").value(entity.getColumnLength());
-			writer.name("dataType").value(entity.getDataType());
 			writer.name("columnName").value(entity.getColumnName());
 			writer.name("nullable").value(entity.getNullable());
 		}
@@ -46,7 +45,7 @@ public class Default extends GenericSerialiserScheme<K2Field> implements Seriali
 				if (entity.isNull()) {
 					entity = service.getBO(new K2FieldENT());
 				}
-				entity.setID(id);
+				entity.setId(id);
 				break;
 			case "name":
 				entity.setName(reader.nextString());
@@ -54,11 +53,8 @@ public class Default extends GenericSerialiserScheme<K2Field> implements Seriali
 			case "columnLength":
 				entity.setColumnLength(reader.nextInt());
 				break;
-			case "dataType":
-				entity.setDataType(reader.nextString());
-				break;
 			case "columnName":
-				entity.setColumName(reader.nextString());
+				entity.setColumnName(reader.nextString());
 				break;
 			case "nullable":
 				entity.setNullable(reader.nextBoolean());

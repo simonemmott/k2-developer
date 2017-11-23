@@ -13,4 +13,7 @@ import com.k2.dev.model.entity.EntityBindingENT;
 @Transactional
 public class EntityBindingHibernateDAO extends HibernateDAO<EntityBindingENT, Long> implements EntityBindingDAO {
 
+	@Override
+	protected Class<? extends EntityBindingENT> getDaoType() { return EntityBindingENT.class; }
+
 }

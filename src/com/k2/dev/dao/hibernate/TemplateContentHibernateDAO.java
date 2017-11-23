@@ -30,7 +30,7 @@ public class TemplateContentHibernateDAO extends HibernateDAO<TemplateContentENT
 		Root<TemplateContentENT> root = criteria.from(TemplateContentENT.class);
 		ParameterExpression<TemplateENT> parm = builder.parameter(TemplateENT.class);
 		criteria.select(root).where(builder.equal(root.get("template"), parm));
-		TypedQuery<TemplateContentENT> query = em.createQuery(criteria);
+		TypedQuery<TemplateContentENT> query = getEM().createQuery(criteria);
 		query.setParameter(parm, template);
 		return query.getResultList();
 	}
@@ -44,9 +44,12 @@ public class TemplateContentHibernateDAO extends HibernateDAO<TemplateContentENT
 		Root<TemplateContentENT> root = criteria.from(TemplateContentENT.class);
 		ParameterExpression<TemplateContentENT> parm = builder.parameter(TemplateContentENT.class);
 		criteria.select(root).where(builder.equal(root.get("parentContent"), parm));
-		TypedQuery<TemplateContentENT> query = em.createQuery(criteria);
+		TypedQuery<TemplateContentENT> query = getEM().createQuery(criteria);
 		query.setParameter(parm, templateContent);
 		return query.getResultList();
 	}
+
+	@Override
+	protected Class<? extends TemplateContentENT> getDaoType() { return TemplateContentENT.class; }
 
 }

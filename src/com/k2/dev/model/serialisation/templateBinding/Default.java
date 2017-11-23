@@ -23,7 +23,7 @@ public class Default extends GenericSerialiserScheme<TemplateBinding> implements
 		
 		writer.beginObject();
 		if ((entity != null)&&(!entity.isNull())) {
-			writer.name("id").value(entity.getID());
+			writer.name("id").value(entity.getId());
 			writer.name("bindingParameter");
 			new com.k2.dev.model.serialisation.k2SnippetParameter.Default().setWriter(writer).setEntity(entity.getBindingParameter()).serialize();
 			
@@ -57,7 +57,7 @@ public class Default extends GenericSerialiserScheme<TemplateBinding> implements
 				if (entity.isNull()) {
 					entity = service.getBO(new TemplateBindingENT());
 				}
-				entity.setID(id);
+				entity.setId(id);
 				break;
 			case "bindingSource":
 				entity.setBindingSource(TemplateBindingENT.Types.BindingSource.valueOf(reader.nextString()));

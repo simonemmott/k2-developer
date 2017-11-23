@@ -2,8 +2,10 @@ package com.k2.dev.model.entity;
 
 
 import javax.persistence.Column;
+import javax.persistence.ConstraintMode;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
@@ -15,8 +17,14 @@ import javax.persistence.Table;
 import com.google.common.base.Objects;
 import com.google.gson.annotations.Expose;
 import com.k2.common.identity.ID;
+import com.k2.common.service.ServiceModel;
+import com.k2.common.service.GenericServiceModel.PersistenceState;
+import com.k2.dev.model.K2PermittedContent;
+import com.k2.dev.model.K2SnippetBinding;
+import com.k2.dev.model.bo.K2PermittedContentBO;
+import com.k2.dev.model.bo.K2SnippetBindingBO;
 
-@Entity
+@Entity(name="K2SnippetBinding")
 @Table(name="SnippetBindings")
 @Inheritance(strategy=InheritanceType.JOINED)
 public class K2SnippetBindingENT implements ID {
@@ -36,15 +44,18 @@ public class K2SnippetBindingENT implements ID {
     public int hashCode() {
         return Objects.hashCode(this.snippet, this.boundParameter);
     }
-		
+    
+	@SuppressWarnings("rawtypes")
+	public ServiceModel getServiceModel(PersistenceState state) { return new K2SnippetBindingBO(this, state); }
+	
 	@Id
 	@Column(name="ID")
 	@Expose(serialize = true)
 	protected Long id;
 	@Override
-	public Long getID() { return id; }
+	public Long getId() { return id; }
 	@Override
-	public void setID(Long id) { this.id = id; }
+	public void setId(Long id) { this.id = id; }
 	
 	@ManyToOne(fetch=FetchType.LAZY, targetEntity=K2SnippetENT.class, optional=true)
 	@JoinColumn(name="SnippetID", nullable=true)
@@ -55,10 +66,21 @@ public class K2SnippetBindingENT implements ID {
 	}
 	public void setWidget(K2SnippetENT snippet) { this.snippet = snippet; }
 	
-	@ManyToOne(fetch=FetchType.LAZY, targetEntity=K2SnippetParameterENT.class, optional=true)
-	@JoinColumn(name="BoundParameterId", nullable=true)
+	@ManyToOne(fetch=FetchType.LAZY, targetEntity=K2SnippetParameterENT.class, optional=false)
+	@JoinColumn(name="BoundParameterId", nullable=false)
 	protected K2SnippetParameterENT boundParameter;
 	public K2SnippetParameterENT getBoundParameter() { return boundParameter; }
 	public void setBoundParameter(K2SnippetParameterENT boundParameter) { this.boundParameter = boundParameter; }
+
+	@SuppressWarnings("rawtypes")
+	public void clone(ServiceModel source) {
+		if (K2SnippetBinding.class.isAssignableFrom(source.getClass())) {
+			K2SnippetBinding clone = (K2SnippetBinding)source;
+			id = clone.getId();
+			snippet = clone.getWidget().getEntity();
+			boundParameter = clone.getBoundParameter().getEntity();
+		}
+	}
+
 
 }

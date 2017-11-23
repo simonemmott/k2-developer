@@ -30,7 +30,7 @@ public class K2SnippetContainerHibernateDAO extends HibernateDAO<K2SnippetContai
 		Root<K2SnippetContainerENT> root = criteria.from(K2SnippetContainerENT.class);
 		ParameterExpression<K2SnippetENT> parm = builder.parameter(K2SnippetENT.class);
 		criteria.select(root).where(builder.equal(root.get("snippet"), parm));
-		TypedQuery<K2SnippetContainerENT> query = em.createQuery(criteria);
+		TypedQuery<K2SnippetContainerENT> query = getEM().createQuery(criteria);
 		query.setParameter(parm, snippet);
 		return query.getResultList();
 	}
@@ -47,7 +47,7 @@ public class K2SnippetContainerHibernateDAO extends HibernateDAO<K2SnippetContai
 		criteria.select(root).where(builder.and(
 				builder.equal(root.get("snippet"), snippetParm),
 				builder.equal(root.get("alias"), aliasParm)));
-		TypedQuery<K2SnippetContainerENT> query = em.createQuery(criteria);
+		TypedQuery<K2SnippetContainerENT> query = getEM().createQuery(criteria);
 		query.setParameter(snippetParm, snippet);
 		query.setParameter(aliasParm, alias);
 
@@ -57,5 +57,8 @@ public class K2SnippetContainerHibernateDAO extends HibernateDAO<K2SnippetContai
 			return null;
 		}
 	}
+
+	@Override
+	protected Class<? extends K2SnippetContainerENT> getDaoType() { return K2SnippetContainerENT.class; }
 
 }
