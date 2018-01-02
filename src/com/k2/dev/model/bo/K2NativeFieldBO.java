@@ -39,7 +39,7 @@ public class K2NativeFieldBO extends K2FieldBO implements ServiceModel, K2Field,
 	public K2NativeFieldBO(K2NativeFieldENT entity, PersistenceState state) { super(state); this.entity = entity; }
 	
 	@Override
-	public MetaModelEntity getMetaEntity() { return MetaModel.Entities.K2NATIVEFIELD; }
+	public MetaModelEntity getMetaEntity() { return MetaModel.Entities.NATIVE_FIELD; }
 
 	@Override
 	public boolean isNull() { return (this == NULL); }
@@ -49,11 +49,23 @@ public class K2NativeFieldBO extends K2FieldBO implements ServiceModel, K2Field,
 	@Override
 	public K2NativeFieldENT getEntity() { return (K2NativeFieldENT)entity; }
 
+	// Fields --------
+	// NativeType field
 	@Override
 	public Types.NativeDateType getNativeType() { if (isNull()) { return null; } return getEntity().getNativeType(); }
 	@Override
 	public void setNativeType(Types.NativeDateType nativeType) { if (isNull()) { return; } getEntity().setNativeType(nativeType); changed(); }
 
+	// MaxNumericValue field
+	@Override
+	public Integer getMaxNumericValue() { if (isNull()) { return null; } return getEntity().getMaxNumericValue(); }
+	@Override
+	public void setMaxNumericValue(Integer maxNumericValue) { if (isNull()) { return; } getEntity().setMaxNumericValue(maxNumericValue); changed(); }
+
+	@Override
+	public Integer getMinNumericValue() { if (isNull()) { return null; } return getEntity().getMinNumericValue(); }
+	@Override
+	public void setMinNumericValue(Integer minNumericValue) { if (isNull()) { return; } getEntity().setMinNumericValue(minNumericValue); changed(); }
 	
 	@Override
 	public void clone(ServiceModel source) {
@@ -66,6 +78,7 @@ public class K2NativeFieldBO extends K2FieldBO implements ServiceModel, K2Field,
 		}
 	}
 	
+	// DataType expression
 	@Override
 	public String getDataType() {
  		switch (getNativeType()) {
@@ -87,6 +100,7 @@ public class K2NativeFieldBO extends K2FieldBO implements ServiceModel, K2Field,
  		return "";
 	}
 
+	// CanonicalDataType expression
 	@Override
 	public String getCononicalDataType() {
  		switch (getNativeType()) {
@@ -107,7 +121,7 @@ public class K2NativeFieldBO extends K2FieldBO implements ServiceModel, K2Field,
  		}
  		return "";
 	}
-
+	
 
 
 }

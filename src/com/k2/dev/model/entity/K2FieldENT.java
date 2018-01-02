@@ -107,6 +107,26 @@ public class K2FieldENT implements ID {
 	protected Types.FieldType fieldType;
 	public Types.FieldType getFieldType() { return fieldType; }
 
+	@Column(name="Enabled", nullable=true)
+	protected Boolean enabled;
+	public Boolean getEnabled() { return enabled; }
+	public void setEnabled(Boolean enabled) { this.enabled = enabled; }
+
+	@Column(name="TopCaption", nullable=true, length=100)
+	protected String topCaption;
+	public String getTopCaption() { return topCaption; }
+	public void setTopCaption(String topCaption) { this.topCaption = topCaption; }
+
+	@Column(name="LeftCaption", nullable=true, length=100)
+	protected String leftCaption;
+	public String getLeftCaption() { return leftCaption; }
+	public void setLeftCaption(String leftCaption) { this.leftCaption = leftCaption; }
+
+	@Column(name="RightCaption", nullable=true, length=100)
+	protected String rightCaption;
+	public String getRightCaption() { return rightCaption; }
+	public void setRightCaption(String rightCaption) { this.rightCaption = rightCaption; }
+
 
 	@SuppressWarnings("rawtypes")
 	public void clone(ServiceModel source) {
@@ -119,9 +139,12 @@ public class K2FieldENT implements ID {
 			columnName = clone.getColumnName();
 			nullable = clone.getNullable();
 			alias = clone.getAlias();
+			enabled = clone.getEnabled();
+			topCaption = clone.getTopCaption();
+			leftCaption = clone.getLeftCaption();
+			rightCaption = clone.getRightCaption();
 		}
 	}
-
 
 
 

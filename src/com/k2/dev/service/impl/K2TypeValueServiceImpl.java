@@ -31,7 +31,7 @@ public class K2TypeValueServiceImpl extends GenericEntityService<K2TypeValueENT,
 			protected K2TypeValueDAO dao;
 			protected K2TypeValueService service;
 			public K2TypeValueServiceList(K2TypeValueService service, K2TypeValueDAO dao) { this.service = service; this.dao = dao; }
-			@Override public MetaModelEntity getMetaEntity() { return MetaModel.Entities.K2TYPEVALUE; }
+			@Override public MetaModelEntity getMetaEntity() { return MetaModel.Entities.TYPE_VALUE; }
 		}
 
 		public static class All extends K2TypeValueServiceList implements ServiceList<K2TypeValue> {

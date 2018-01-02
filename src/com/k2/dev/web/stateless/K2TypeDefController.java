@@ -77,7 +77,7 @@ public class K2TypeDefController extends AbstractStatelessEntityController<K2Typ
     protected List<MetaMethod> getMetaMethods() { return MetaK2TypeDef.Methods.getMethods(); }
     
     @Override
-    protected MetaModelEntity getMetaEntity() { return MetaModel.Entities.K2TYPEDEF; }
+    protected MetaModelEntity getMetaEntity() { return MetaModel.Entities.TYPE_DEFINITION; }
     
     
     @RequestMapping(value="/entities/k2TypeDef", method=RequestMethod.GET)

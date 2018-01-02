@@ -33,7 +33,7 @@ public class TemplateBindingServiceImpl extends GenericEntityService<TemplateBin
 			protected TemplateBindingDAO dao;
 			protected TemplateBindingService service;
 			public TemplateBindingServiceList(TemplateBindingService service, TemplateBindingDAO dao) { this.service = service; this.dao = dao; }
-			@Override public MetaModelEntity getMetaEntity() { return MetaModel.Entities.TEMPLATE_BINDING; }
+			@Override public MetaModelEntity getMetaEntity() { return MetaModel.Entities.TEMPLATEBINDING; }
 		}
 
 		public static class All extends TemplateBindingServiceList implements ServiceList<TemplateBinding> {

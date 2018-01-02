@@ -13,11 +13,13 @@ import com.k2.common.service.GenericServiceList;
 import com.k2.common.service.ServiceList;
 import com.k2.common.service.GenericServiceModel.PersistenceState;
 import com.k2.dev.dao.K2FieldDAO;
+import com.k2.dev.model.Component;
 import com.k2.dev.model.EntityFormatter;
 import com.k2.dev.model.K2Entity;
 import com.k2.dev.model.K2Field;
 import com.k2.dev.model.bo.EntityFormatterBO;
 import com.k2.dev.model.bo.K2FieldBO;
+import com.k2.dev.model.entity.ComponentENT;
 import com.k2.dev.model.entity.EntityFormatterENT;
 import com.k2.dev.model.entity.K2EntityENT;
 import com.k2.dev.model.entity.K2FieldENT;
@@ -57,6 +59,18 @@ public class K2FieldServiceImpl extends GenericEntityService<K2FieldENT, Long, K
 			@Override protected K2Field getBO(K2FieldENT entity) { return service.getBO(entity); }
 		}
 
+		public static class ForComponent extends K2FieldServiceList implements ServiceList<K2Field> {
+			private Component component;
+			public ForComponent(K2FieldService service, K2FieldDAO dao, Component component) { 
+				super(service, dao);
+				this.component = component;
+			}
+			@Override public K2Field newBO() { return service.newBO(null, new Init.ListForComponent(component.getEntity())); }
+			@Override public K2Field newBO(Long id) { return service.newBO(id, new Init.ListForComponent(component.getEntity())); }
+			@Override protected List<K2FieldENT> getList() { return dao.listForComponent(component.getEntity()); }
+			@Override protected K2Field getBO(K2FieldENT entity) { return service.getBO(entity); }
+		}
+
 	}
 	
 	public static class Init {
@@ -67,6 +81,14 @@ public class K2FieldServiceImpl extends GenericEntityService<K2FieldENT, Long, K
 				this.entity = entity;
 			}
 			@Override public void initialize(K2FieldENT field) { field.setK2Entity(entity); }
+		}
+		
+		public static class ListForComponent extends EntityInitialValues<K2FieldENT> {
+			private ComponentENT component;
+			public ListForComponent(ComponentENT component) {
+				this.component = component;
+			}
+			@Override public void initialize(K2FieldENT field) { }
 		}
 		
 	}
@@ -108,6 +130,8 @@ public class K2FieldServiceImpl extends GenericEntityService<K2FieldENT, Long, K
 	public K2Field fetchK2Field(Long id) { return super.fetch(id); }
 	@Override
 	public ServiceList<K2Field> listForEntity(K2Entity k2Entity) { return new Lists.ForEntity(this, dao, k2Entity); }
+	@Override
+	public ServiceList<K2Field> listForComponent(Component component) { return new Lists.ForComponent(this, dao, component); }
 
 
 }

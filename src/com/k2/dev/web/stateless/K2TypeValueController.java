@@ -77,7 +77,7 @@ public class K2TypeValueController extends AbstractStatelessEntityController<K2T
     protected List<MetaMethod> getMetaMethods() { return MetaK2TypeValue.Methods.getMethods(); }
     
     @Override
-    protected MetaModelEntity getMetaEntity() { return MetaModel.Entities.K2TYPEVALUE; }
+    protected MetaModelEntity getMetaEntity() { return MetaModel.Entities.TYPE_VALUE; }
     
     
     @RequestMapping(value="/entities/k2TypeValue", method=RequestMethod.GET)

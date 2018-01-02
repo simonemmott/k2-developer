@@ -73,12 +73,24 @@ public class K2NativeFieldENT extends K2FieldENT {
 	public Types.NativeDateType getNativeType() { return nativeType; }
 	public void setNativeType(Types.NativeDateType nativeType) { this.nativeType = nativeType; }
 	
+	@Column(name="MaxNumericValue", nullable=true)
+	protected Integer maxNumericValue;
+	public Integer getMaxNumericValue() { return maxNumericValue; }
+	public void setMaxNumericValue(Integer maxNumericValue) { this.maxNumericValue = maxNumericValue; }
+	
+	@Column(name="MinNumericValue", nullable=true)
+	protected Integer minNumericValue;
+	public Integer getMinNumericValue() { return minNumericValue; }
+	public void setMinNumericValue(Integer minNumericValue) { this.minNumericValue = minNumericValue; }
+
 	@SuppressWarnings("rawtypes")
 	public void clone(ServiceModel source) {
 		super.clone(source);
 		if (K2NativeField.class.isAssignableFrom(source.getClass())) {
 			K2NativeField clone = (K2NativeField)source;
 			nativeType = clone.getNativeType();
+			maxNumericValue = clone.getMaxNumericValue();
+			minNumericValue = clone.getMinNumericValue();
 		}
 	}
 

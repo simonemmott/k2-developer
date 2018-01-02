@@ -39,7 +39,7 @@ public class K2NativeFieldServiceImpl extends GenericEntityService<K2NativeField
 			protected K2NativeFieldDAO dao;
 			protected K2NativeFieldService service;
 			public K2NativeFieldServiceList(K2NativeFieldService service, K2NativeFieldDAO dao) { this.service = service; this.dao = dao; }
-			@Override public MetaModelEntity getMetaEntity() { return MetaModel.Entities.K2NATIVEFIELD; }
+			@Override public MetaModelEntity getMetaEntity() { return MetaModel.Entities.NATIVE_FIELD; }
 		}
 
 		public static class All extends K2NativeFieldServiceList implements ServiceList<K2NativeField> {

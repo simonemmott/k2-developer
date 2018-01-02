@@ -56,7 +56,7 @@ public class TemplateContentBO extends GenericServiceModel implements ServiceMod
     public TemplateContentBO(TemplateContentENT entity, PersistenceState state) { super(state); this.entity = entity; }
     
 	@Override
-	public MetaModelEntity getMetaEntity() { return MetaModel.Entities.TEMPLATE_CONTENT; }
+	public MetaModelEntity getMetaEntity() { return MetaModel.Entities.TEMPLATECONTENT; }
 		
 	@Override
 	public boolean isNull() { return (this == NULL); }

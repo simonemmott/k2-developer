@@ -31,7 +31,7 @@ public class K2TypeDefServiceImpl extends GenericEntityService<K2TypeDefENT, Lon
 			protected K2TypeDefDAO dao;
 			protected K2TypeDefService service;
 			public K2TypeDefServiceList(K2TypeDefService service, K2TypeDefDAO dao) { this.service = service; this.dao = dao; }
-			@Override public MetaModelEntity getMetaEntity() { return MetaModel.Entities.K2TYPEDEF; }
+			@Override public MetaModelEntity getMetaEntity() { return MetaModel.Entities.TYPE_DEFINITION; }
 		}
 
 		public static class All extends K2TypeDefServiceList implements ServiceList<K2TypeDef> {

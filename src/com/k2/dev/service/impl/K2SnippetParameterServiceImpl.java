@@ -38,7 +38,7 @@ public class K2SnippetParameterServiceImpl extends GenericEntityService<K2Snippe
 				this.service = service; 
 				this.dao = dao; 
 			}
-			@Override public MetaModelEntity getMetaEntity() { return MetaModel.Entities.SNIPPET_PARAMETER; }
+			@Override public MetaModelEntity getMetaEntity() { return MetaModel.Entities.K2SNIPPETPARAMETER; }
 		}
 		public static class All extends K2SnippetParameterServiceList implements ServiceList<K2SnippetParameter> {
 			public All(K2SnippetParameterService service, K2SnippetParameterDAO dao) { super(service, dao); }

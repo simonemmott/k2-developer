@@ -77,7 +77,7 @@ public class K2NativeFieldController extends AbstractStatelessEntityController<K
     protected List<MetaMethod> getMetaMethods() { return MetaK2NativeField.Methods.getMethods(); }
     
     @Override
-    protected MetaModelEntity getMetaEntity() { return MetaModel.Entities.K2NATIVEFIELD; }
+    protected MetaModelEntity getMetaEntity() { return MetaModel.Entities.NATIVE_FIELD; }
     
     
     @RequestMapping(value="/entities/k2NativeField", method=RequestMethod.GET)

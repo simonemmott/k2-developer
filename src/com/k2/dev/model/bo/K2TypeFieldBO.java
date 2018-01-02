@@ -40,7 +40,7 @@ public class K2TypeFieldBO extends K2FieldBO implements ServiceModel, K2TypeFiel
 	public K2TypeFieldBO(K2TypeFieldENT entity, PersistenceState state) { super(state); this.entity = entity; }
 	
 	@Override
-	public MetaModelEntity getMetaEntity() { return MetaModel.Entities.K2TYPEFIELD; }
+	public MetaModelEntity getMetaEntity() { return MetaModel.Entities.TYPE_FIELD; }
 
 	@Override
 	public boolean isNull() { return (this == NULL); }

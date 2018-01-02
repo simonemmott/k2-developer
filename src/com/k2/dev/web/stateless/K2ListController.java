@@ -78,7 +78,7 @@ public class K2ListController extends AbstractStatelessEntityController<K2List> 
     protected List<MetaMethod> getMetaMethods() { return MetaK2List.Methods.getMethods(); }
     
     @Override
-    protected MetaModelEntity getMetaEntity() { return MetaModel.Entities.K2LIST; }
+    protected MetaModelEntity getMetaEntity() { return MetaModel.Entities.K2_LIST; }
     
     
     @RequestMapping(value="/entities/k2List", method=RequestMethod.GET)

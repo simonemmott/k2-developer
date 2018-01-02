@@ -32,7 +32,7 @@ public class K2SnippetBindingServiceImpl extends GenericEntityService<K2SnippetB
 			protected K2SnippetBindingDAO dao;
 			protected K2SnippetBindingService service;
 			public K2SnippetBindingServiceList(K2SnippetBindingService service, K2SnippetBindingDAO dao) { this.service = service; this.dao = dao; }
-			@Override public MetaModelEntity getMetaEntity() { return MetaModel.Entities.SNIPPET_BINDING; }
+			@Override public MetaModelEntity getMetaEntity() { return MetaModel.Entities.K2SNIPPETBINDING; }
 		}
 
 		public static class All extends K2SnippetBindingServiceList implements ServiceList<K2SnippetBinding> {

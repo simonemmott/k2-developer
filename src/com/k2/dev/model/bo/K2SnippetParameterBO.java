@@ -35,7 +35,7 @@ public class K2SnippetParameterBO extends GenericServiceModel implements Service
     public K2SnippetParameterBO(K2SnippetParameterENT entity, PersistenceState state) { super(state); this.entity = entity; }
     
 	@Override
-	public MetaModelEntity getMetaEntity() { return MetaModel.Entities.SNIPPET_PARAMETER; }
+	public MetaModelEntity getMetaEntity() { return MetaModel.Entities.K2SNIPPETPARAMETER; }
 		
 	@Override
 	public boolean isNull() { return (this == NULL); }

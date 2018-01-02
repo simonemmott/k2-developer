@@ -33,7 +33,7 @@ public class TemplateContentServiceImpl extends GenericEntityService<TemplateCon
 			protected TemplateContentDAO dao;
 			protected TemplateContentService service;
 			public TemplateContentServiceList(TemplateContentService service, TemplateContentDAO dao) { this.service = service; this.dao = dao; }
-			@Override public MetaModelEntity getMetaEntity() { return MetaModel.Entities.TEMPLATE_CONTENT; }
+			@Override public MetaModelEntity getMetaEntity() { return MetaModel.Entities.TEMPLATECONTENT; }
 		}
 
 		public static class All extends TemplateContentServiceList implements ServiceList<TemplateContent> {

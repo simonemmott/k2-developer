@@ -50,7 +50,7 @@ public class TemplateBindingBO extends K2SnippetBindingBO implements ServiceMode
     public TemplateBindingBO(TemplateBindingENT entity, PersistenceState state) { super(state); this.entity = entity; }
     
 	@Override
-	public MetaModelEntity getMetaEntity() { return MetaModel.Entities.TEMPLATE_BINDING; }
+	public MetaModelEntity getMetaEntity() { return MetaModel.Entities.TEMPLATEBINDING; }
 		
 	@Override
 	public boolean isNull() { return (this == NULL); }

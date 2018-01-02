@@ -49,6 +49,26 @@ public interface K2Field  extends ServiceModel, ID {
 	// FieldType discriminator field
 	public Types.FieldType getFieldType();
 
+	// Enabled field
+	public Boolean getEnabled();
+	public void setEnabled(Boolean enabled);
+
+	// TopCaption field
+	public String getTopCaption();
+	public void setTopCaption(String topCaption);
+	
+	// LeftCaption field
+	public String getLeftCaption();
+	public void setLeftCaption(String leftCaption);
+	
+	// RightCaption field
+	public String getRightCaption();
+	public void setRightCaption(String rightCaption);
+
+	// DisplayedSize field
+	public Integer getDisplayedSize();
+	public void setDisplayedSize(Integer displayedSize);
+
 	// Lists ---------
 	// Entities list
 	public ServiceList<K2Entity> getEntities();
@@ -68,6 +88,8 @@ public interface K2Field  extends ServiceModel, ID {
 	
 	// IsDiscriminator
 	public Boolean getIsDiscriminator();
-
+	
+	// Required expression
+	public Boolean getRequired();
 
 }

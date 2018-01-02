@@ -34,7 +34,7 @@ public class K2SnippetContainerServiceImpl extends GenericEntityService<K2Snippe
 			protected K2SnippetContainerDAO dao;
 			protected K2SnippetContainerService service;
 			public K2SnippetContainerServiceList(K2SnippetContainerService service, K2SnippetContainerDAO dao) { this.service = service; this.dao = dao; }
-			@Override public MetaModelEntity getMetaEntity() { return MetaModel.Entities.SNIPPET_CONTAINER; }
+			@Override public MetaModelEntity getMetaEntity() { return MetaModel.Entities.K2SNIPPETCONTAINER; }
 		}
 
 		public static class All extends K2SnippetContainerServiceList implements ServiceList<K2SnippetContainer> {

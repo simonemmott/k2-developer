@@ -5,7 +5,6 @@ import com.k2.common.service.ServiceList;
 import com.k2.common.service.ServiceModel;
 import com.k2.dev.model.entity.ExpressionENT;
 import com.k2.dev.model.entity.ExpressionENT.Types;
-import com.k2.dev.model.types.ExpressionType;
 
 @SuppressWarnings({"rawtypes"})
 public interface Expression  extends ServiceModel, ID {

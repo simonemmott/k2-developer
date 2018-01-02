@@ -38,7 +38,7 @@ public class K2ListBO extends GenericServiceModel implements ServiceModel, K2Lis
     public K2ListBO(K2ListENT entity, PersistenceState state) { super(state); this.entity = entity; }
     
 	@Override
-	public MetaModelEntity getMetaEntity() { return MetaModel.Entities.K2LIST; }
+	public MetaModelEntity getMetaEntity() { return MetaModel.Entities.K2_LIST; }
 	
 	public String getIdentity() { return getName(); }
 		

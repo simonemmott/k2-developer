@@ -42,7 +42,7 @@ public class K2TypeDefBO extends GenericServiceModel implements ServiceModel, K2
     public K2TypeDefBO(K2TypeDefENT entity, PersistenceState state) { super(state); this.entity = entity; }
     
 	@Override
-	public MetaModelEntity getMetaEntity() { return MetaModel.Entities.K2TYPEDEF; }
+	public MetaModelEntity getMetaEntity() { return MetaModel.Entities.TYPE_DEFINITION; }
 	
 	public String getIdentity() { return getName(); }
 		

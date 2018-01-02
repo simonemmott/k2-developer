@@ -65,7 +65,7 @@ public class K2ServiceBO extends GenericServiceModel implements ServiceModel, K2
     public K2ServiceBO(K2ServiceENT entity, PersistenceState state) { super(state); this.entity = entity; }
     
 	@Override
-	public MetaModelEntity getMetaEntity() { return MetaModel.Entities.K2SERVICE; }
+	public MetaModelEntity getMetaEntity() { return MetaModel.Entities.SERVICE; }
 	
 	public String getIdentity() { return getName(); }
 		

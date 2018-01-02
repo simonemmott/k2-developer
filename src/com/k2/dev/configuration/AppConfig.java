@@ -32,8 +32,6 @@ import com.google.gson.GsonBuilder;
 		})
 public class AppConfig {
 	
-	// hmmmm
-	
 	@SuppressWarnings("unused")
 	@Autowired
 	private Environment env;

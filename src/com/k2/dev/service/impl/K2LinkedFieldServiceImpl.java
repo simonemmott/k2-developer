@@ -44,7 +44,7 @@ public class K2LinkedFieldServiceImpl extends GenericEntityService<K2LinkedField
 			protected K2LinkedFieldDAO dao;
 			protected K2LinkedFieldService service;
 			public K2LinkedFieldServiceList(K2LinkedFieldService service, K2LinkedFieldDAO dao) { this.service = service; this.dao = dao; }
-			@Override public MetaModelEntity getMetaEntity() { return MetaModel.Entities.K2LINKEDFIELD; }
+			@Override public MetaModelEntity getMetaEntity() { return MetaModel.Entities.LINKED_FIELD; }
 		}
 
 		public static class All extends K2LinkedFieldServiceList implements ServiceList<K2LinkedField> {

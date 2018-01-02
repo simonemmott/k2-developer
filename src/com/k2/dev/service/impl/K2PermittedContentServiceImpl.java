@@ -37,7 +37,7 @@ public class K2PermittedContentServiceImpl extends GenericEntityService<K2Permit
 			protected K2PermittedContentDAO dao;
 			protected K2PermittedContentService service;
 			public K2PermitedContentServiceList(K2PermittedContentService service, K2PermittedContentDAO dao) { this.service = service; this.dao = dao; }
-			@Override public MetaModelEntity getMetaEntity() { return MetaModel.Entities.PERMITTED_CONTENT; }
+			@Override public MetaModelEntity getMetaEntity() { return MetaModel.Entities.K2PERMITTEDCONTENT; }
 		}
 
 		public static class All extends K2PermitedContentServiceList implements ServiceList<K2PermittedContent> {

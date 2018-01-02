@@ -39,7 +39,7 @@ public class K2MethodBO extends GenericServiceModel implements ServiceModel, K2M
     public K2MethodBO(K2MethodENT entity, PersistenceState state) { super(state); this.entity = entity; }
     
 	@Override
-	public MetaModelEntity getMetaEntity() { return MetaModel.Entities.K2METHOD; }
+	public MetaModelEntity getMetaEntity() { return MetaModel.Entities.METHOD; }
 		
 	@Override
 	public boolean isNull() { return (this == NULL); }

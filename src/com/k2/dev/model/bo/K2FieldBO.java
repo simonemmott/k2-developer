@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Configurable;
 
 import com.k2.common.service.ServiceModel;
 import com.k2.common.util.StringUtil;
+import com.k2.common.expressions.Ex;
 import com.k2.common.meta.MetaModelEntity;
 import com.k2.common.nulls.Nvl;
 import com.k2.common.service.EntityService;
@@ -90,6 +91,36 @@ public class K2FieldBO extends GenericServiceModel implements ServiceModel, K2Fi
 	public Types.FieldType getFieldType() { if (isNull()) { return null; } return getEntity().getFieldType(); }
 	
 	@Override
+	public Boolean getEnabled() { if (isNull()) { return null; } return getEntity().getEnabled(); }
+	@Override
+	public void setEnabled(Boolean enabled) { if (isNull()) { return; } getEntity().setEnabled(enabled); changed(); }
+	
+	@Override
+	public String getTopCaption() { if (isNull()) { return null; } return getEntity().getTopCaption(); }
+	@Override
+	public void setTopCaption(String topCaption) { if (isNull()) { return; } getEntity().setTopCaption(topCaption); changed(); }
+	
+	@Override
+	public String getLeftCaption() { if (isNull()) { return null; } return getEntity().getLeftCaption(); }
+	@Override
+	public void setLeftCaption(String leftCaption) { if (isNull()) { return; } getEntity().setLeftCaption(leftCaption); changed(); }
+	
+	@Override
+	public String getRightCaption() { if (isNull()) { return null; } return getEntity().getRightCaption(); }
+	@Override
+	public void setRightCaption(String rightCaption) { if (isNull()) { return; } getEntity().setRightCaption(rightCaption); changed(); }
+	
+	@Override
+	public Integer getDisplayedSize() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public void setDisplayedSize(Integer displayedSize) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
 	public void clone(ServiceModel source) {
 		if (source == null) { return; }
 		if (entity == null) { entity = new K2FieldENT(); }
@@ -120,7 +151,13 @@ public class K2FieldBO extends GenericServiceModel implements ServiceModel, K2Fi
 	public String getCanonicalDataType() { return ""; };
 
 	@Override
-	public Boolean getIsDiscriminator() { return false; }
+	public Boolean getRequired() { return Ex.BOOLEAN.not(getNullable());
+	}
+	@Override
+	public Boolean getIsDiscriminator() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 
 

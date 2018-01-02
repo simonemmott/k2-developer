@@ -35,7 +35,7 @@ public class K2PermittedContentBO extends GenericServiceModel implements Service
     public K2PermittedContentBO(K2PermittedContentENT entity, PersistenceState state) { super(state); this.entity = entity; }
 
 	@Override
-	public MetaModelEntity getMetaEntity() { return MetaModel.Entities.PERMITTED_CONTENT; }
+	public MetaModelEntity getMetaEntity() { return MetaModel.Entities.K2PERMITTEDCONTENT; }
 		
 	@Override
 	public boolean isNull() { return (this == NULL); }

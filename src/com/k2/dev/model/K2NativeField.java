@@ -17,12 +17,25 @@ public interface K2NativeField  extends ServiceModel, K2Field {
 	@Override
 	public K2NativeField Null();
 
+	// Fields ---------
+	// NativeType field
 	public Types.NativeDateType getNativeType();
 	public void setNativeType(Types.NativeDateType nativeType);
+	
+	// MaxNumericValue field
+	public Integer getMaxNumericValue();
+	public void setMaxNumericValue(Integer maxNumericValue);
+
+	// MinNumericValue field
+	public Integer getMinNumericValue();
+	public void setMinNumericValue(Integer minNumericValue);
+
 
 	public String getDataType();
 	
 	public String getCononicalDataType();
+
+
 	
 
 }

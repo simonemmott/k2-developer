@@ -40,7 +40,7 @@ public class K2SnippetBindingBO extends GenericServiceModel implements ServiceMo
 	public K2SnippetBindingBO(K2SnippetBindingENT entity, PersistenceState state) { super(state); this.entity = entity; }
 	
 	@Override
-	public MetaModelEntity getMetaEntity() { return MetaModel.Entities.SNIPPET_BINDING; }
+	public MetaModelEntity getMetaEntity() { return MetaModel.Entities.K2SNIPPETBINDING; }
 		
 	@Override
 	public boolean isNull() { return (this == NULL); }

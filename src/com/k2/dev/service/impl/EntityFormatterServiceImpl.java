@@ -32,7 +32,7 @@ public class EntityFormatterServiceImpl extends GenericEntityService<EntityForma
 			protected EntityFormatterDAO dao;
 			protected EntityFormatterService service;
 			public EntityFormatterServiceList(EntityFormatterService service, EntityFormatterDAO dao) { this.service = service; this.dao = dao; }
-			@Override public MetaModelEntity getMetaEntity() { return MetaModel.Entities.ENTITY_FORMATTER; }
+			@Override public MetaModelEntity getMetaEntity() { return MetaModel.Entities.ENTITYFORMATTER; }
 		}
 
 		public static class All extends EntityFormatterServiceList implements ServiceList<EntityFormatter> {

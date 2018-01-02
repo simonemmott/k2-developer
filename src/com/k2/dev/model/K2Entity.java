@@ -146,6 +146,9 @@ public interface K2Entity  extends ServiceModel, Component {
 
 	// ENTClassName expression
 	public String getENTClassName();
+	
+	// MetaPackageName expression
+	public String getMetaPackageName();
 
 	
 	

@@ -35,7 +35,7 @@ public class EntityFormatterBO extends GenericServiceModel implements ServiceMod
 	public EntityFormatterBO(EntityFormatterENT entity, PersistenceState state) { super(state); this.entity = entity; }
 	
 	@Override
-	public MetaModelEntity getMetaEntity() { return MetaModel.Entities.ENTITY_FORMATTER; }
+	public MetaModelEntity getMetaEntity() { return MetaModel.Entities.ENTITYFORMATTER; }
 		
 	@Override
 	public boolean isNull() { return (this == NULL); }

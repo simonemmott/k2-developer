@@ -15,14 +15,26 @@ public interface K2LinkedField  extends ServiceModel, K2Field {
 	@Override
 	public K2LinkedField Null();
 	
+	// Fields -------
+	// AllowInsert field
 	public Boolean getAllowInsert();
 	public void setAllowInsert(Boolean allowInsert);
 	
+	// AllowNavigate field
 	public Boolean getAllowNavigate();
 	public void setAllowNavigate(Boolean allow);
 	
+	// LinkedEntity field
 	public K2Entity getLinkedEntity();
 	public void setLinkedEntity(K2Entity linkedEntity);
+
+	// ValuesList field
+	public K2List getValuesList();
+	public void setValuesList(K2List valuesList);
+
+	// Expressions -----------
+	// ValuesListName expression
+	public String getValuesListName();
 
 
 }

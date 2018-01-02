@@ -44,7 +44,7 @@ public class K2SnippetBO extends GenericServiceModel implements ServiceModel, K2
 	public K2SnippetBO(K2SnippetENT entity, PersistenceState state) { super(state); this.entity = entity; }
 
 	@Override
-	public MetaModelEntity getMetaEntity() { return MetaModel.Entities.SNIPPET; }
+	public MetaModelEntity getMetaEntity() { return MetaModel.Entities.K2SNIPPET; }
 		
 	public static K2Snippet NULL = new K2SnippetBO();
 	@Override

@@ -77,7 +77,7 @@ public class K2LinkedFieldController extends AbstractStatelessEntityController<K
     protected List<MetaMethod> getMetaMethods() { return MetaK2LinkedField.Methods.getMethods(); }
     
     @Override
-    protected MetaModelEntity getMetaEntity() { return MetaModel.Entities.K2LINKEDFIELD; }
+    protected MetaModelEntity getMetaEntity() { return MetaModel.Entities.LINKED_FIELD; }
     
     
     @RequestMapping(value="/entities/k2LinkedField", method=RequestMethod.GET)

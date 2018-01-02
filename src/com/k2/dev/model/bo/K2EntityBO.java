@@ -326,6 +326,10 @@ public class K2EntityBO extends ComponentBO implements ServiceModel, K2Entity, C
 	@Override
 	public String getENTClassName() { return Ex.STRING.concatenate(getEntityName(), "ENT"); }
 	
+	// MetaPackageName expression
+	@Override
+	public String getMetaPackageName() { return Ex.STRING.concatenate(getPackageName(), ".model.meta"); }
+	
 	// MetaDataPackageName expression
 	@Override
 	public String getMetaDataPackageName() { return Ex.STRING.concatenate(getPackageName(), ".model.meta.component"); }

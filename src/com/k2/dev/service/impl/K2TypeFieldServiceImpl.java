@@ -49,7 +49,7 @@ public class K2TypeFieldServiceImpl extends GenericEntityService<K2TypeFieldENT,
 			protected K2TypeFieldDAO dao;
 			protected K2TypeFieldService service;
 			public K2TypeFieldServiceList(K2TypeFieldService service, K2TypeFieldDAO dao) { this.service = service; this.dao = dao; }
-			@Override public MetaModelEntity getMetaEntity() { return MetaModel.Entities.K2TYPEFIELD; }
+			@Override public MetaModelEntity getMetaEntity() { return MetaModel.Entities.TYPE_FIELD; }
 		}
 
 		public static class All extends K2TypeFieldServiceList implements ServiceList<K2TypeField> {

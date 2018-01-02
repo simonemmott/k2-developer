@@ -10,11 +10,13 @@ import com.k2.common.service.EntityService;
 import com.k2.dev.model.K2Entity;
 import com.k2.dev.model.K2Field;
 import com.k2.dev.model.K2LinkedField;
+import com.k2.dev.model.K2List;
 import com.k2.dev.model.entity.K2LinkedFieldENT;
 import com.k2.dev.model.entity.K2NativeFieldENT;
 import com.k2.dev.model.meta.MetaModel;
 import com.k2.dev.service.K2EntityService;
 import com.k2.dev.service.K2LinkedFieldService;
+import com.k2.dev.service.K2ListService;
 
 @SuppressWarnings("rawtypes")
 @Configurable
@@ -24,6 +26,8 @@ public class K2LinkedFieldBO extends K2FieldBO implements ServiceModel, K2Field,
 	protected K2LinkedFieldService service;
 	@Autowired(required=true)
 	protected K2EntityService k2EntityService;
+	@Autowired(required=true)
+	protected K2ListService k2ListService;
 
 	@Override
 	public EntityService  getService() { return service; }
@@ -34,7 +38,7 @@ public class K2LinkedFieldBO extends K2FieldBO implements ServiceModel, K2Field,
 	public K2LinkedFieldBO(K2LinkedFieldENT entity, PersistenceState state) { super(state); this.entity = entity; }
 	
 	@Override
-	public MetaModelEntity getMetaEntity() { return MetaModel.Entities.K2LINKEDFIELD; }
+	public MetaModelEntity getMetaEntity() { return MetaModel.Entities.LINKED_FIELD; }
 
 	@Override
 	public boolean isNull() { return (this == NULL); }
@@ -59,6 +63,11 @@ public class K2LinkedFieldBO extends K2FieldBO implements ServiceModel, K2Field,
 	@Override
 	public void setLinkedEntity(K2Entity linkedEntity) { if (isNull()) { return; } getEntity().setLinkedEntity(linkedEntity.getEntity()); changed(); }
 
+	@Override
+	public K2List getValuesList() { if (isNull()) { return K2ListBO.NULL; } return Nvl.nvl(k2ListService.getBO(getEntity().getValuesList()), K2ListBO.NULL); }
+	@Override
+	public void setValuesList(K2List valuesList) { if (isNull()) { return; } getEntity().setValuesList(valuesList.getEntity()); changed(); }
+
 	
 	@Override
 	public void clone(ServiceModel source) {
@@ -75,7 +84,10 @@ public class K2LinkedFieldBO extends K2FieldBO implements ServiceModel, K2Field,
 	public String getDataType() { return getLinkedEntity().getAlias(); };
 
 	@Override
-	public String getCanonicalDataType() { return getLinkedEntity().getModelPackageName()+"."+getLinkedEntity().getAlias(); };
+	public String getCanonicalDataType() { return getLinkedEntity().getModelPackageName()+"."+getLinkedEntity().getAlias(); }
+
+	@Override
+	public String getValuesListName() { return getValuesList().getName(); };
 
 
 

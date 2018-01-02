@@ -3,6 +3,7 @@ package com.k2.dev.dao.hibernate;
 
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.TypedQuery;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Repository;
 
 import com.k2.common.dataAccess.HibernateDAO;
 import com.k2.dev.dao.K2FieldDAO;
+import com.k2.dev.model.entity.ComponentENT;
 import com.k2.dev.model.entity.K2EntityENT;
 import com.k2.dev.model.entity.K2FieldENT;
 
@@ -37,5 +39,19 @@ public class K2FieldHibernateDAO extends HibernateDAO<K2FieldENT, Long> implemen
 
 	@Override
 	protected Class<? extends K2FieldENT> getDaoType() { return K2FieldENT.class; }
+
+	@Override
+	public List<K2FieldENT> listForComponent(ComponentENT component) {
+		
+		List<K2FieldENT> list = new ArrayList<K2FieldENT>();
+
+		K2EntityENT k2Entity = (K2EntityENT)component;
+		while (k2Entity != null) {
+			list.addAll(this.listForEntity(k2Entity));
+			k2Entity = k2Entity.getExtendsEntity();
+		}
+
+		return list;
+	}
 
 }

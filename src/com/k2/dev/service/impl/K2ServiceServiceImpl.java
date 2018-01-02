@@ -36,7 +36,7 @@ public class K2ServiceServiceImpl extends GenericEntityService<K2ServiceENT, Lon
 			protected K2ServiceDAO dao;
 			protected K2ServiceService service;
 			public K2ServiceServiceList(K2ServiceService service, K2ServiceDAO dao) { this.service = service; this.dao = dao; }
-			@Override public MetaModelEntity getMetaEntity() { return MetaModel.Entities.K2SERVICE; }
+			@Override public MetaModelEntity getMetaEntity() { return MetaModel.Entities.SERVICE; }
 		}
 
 		public static class All extends K2ServiceServiceList implements ServiceList<K2Service> {

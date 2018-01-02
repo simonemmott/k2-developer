@@ -30,7 +30,7 @@ public class K2MethodServiceImpl extends GenericEntityService<K2MethodENT, Long,
 			protected K2MethodDAO dao;
 			protected K2MethodService service;
 			public K2MethodServiceList(K2MethodService service, K2MethodDAO dao) { this.service = service; this.dao = dao; }
-			@Override public MetaModelEntity getMetaEntity() { return MetaModel.Entities.K2METHOD; }
+			@Override public MetaModelEntity getMetaEntity() { return MetaModel.Entities.METHOD; }
 		}
 
 		public static class All extends K2MethodServiceList implements ServiceList<K2Method> {
